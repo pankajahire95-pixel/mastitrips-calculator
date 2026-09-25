@@ -3,7 +3,7 @@ import { PackageData, PricingSettings, RoomAllocation } from './types';
 import { calculateMasterPackageCost, generateSmartWarnings } from './engine/calculator';
 import { loadActivePackage, saveActivePackage, savePackageToLibrary, getSavedPackagesList } from './utils/storage';
 import { getEmptyPackage, getRajasthanDemoPackage } from './demo/sampleData';
-import { formatINR, generateUniqueId } from './utils/formatters';
+import { formatINR, generateUniqueId, parsePositiveNumber } from './utils/formatters';
 import { printIsolatedCostingSheet } from './utils/printManager';
 import { 
   Building2, 
@@ -14,8 +14,9 @@ import {
   PlusCircle, 
   Layers, 
   ChevronDown, 
-  ChevronUp,
-  SlidersHorizontal
+  ChevronUp, 
+  SlidersHorizontal,
+  Settings
 } from 'lucide-react';
 
 import { Header } from './components/Header';
@@ -47,8 +48,9 @@ export const App: React.FC = () => {
   });
   const [saveStatus, setSaveStatus] = useState<'saved' | 'saving' | 'unsaved'>('saved');
   const [savedCount, setSavedCount] = useState<number>(() => getSavedPackagesList().length);
-  const [activeTab, setActiveTab] = useState<ServiceTab>('all');
+  const [activeTab, setActiveTab] = useState<ServiceTab>('hotels');
   const [isTopPanelCollapsed, setIsTopPanelCollapsed] = useState(false);
+  const [showPaxRules, setShowPaxRules] = useState(false);
 
   // Modals state
   const [isBreakdownOpen, setIsBreakdownOpen] = useState(false);
@@ -192,37 +194,200 @@ export const App: React.FC = () => {
         {/* Smart Warnings Checklist */}
         <SmartWarningsBanner warnings={smartWarnings} />
 
-        {/* Top Master Panel: Package & Pax Side-by-Side (or collapsed 1-line bar) */}
-        {isTopPanelCollapsed ? (
-          <div className="bg-white rounded-xl border border-slate-200 px-3.5 py-1.5 shadow-2xs flex items-center justify-between gap-3 text-xs mb-2.5">
-            <div className="flex items-center gap-2 sm:gap-3 overflow-hidden flex-wrap">
-              <span className="font-extrabold text-slate-900 truncate">
-                {packageData.packageDetails.packageName || 'New Tour Package'}
-              </span>
-              <span className="text-slate-300 hidden sm:inline">•</span>
-              <span className="text-slate-600 font-semibold truncate hidden sm:inline">
-                {packageData.packageDetails.destination || 'No Route'}
-              </span>
-              <span className="text-slate-300">•</span>
-              <span className="text-blue-700 font-bold">
-                {packageData.packageDetails.nights}N/{packageData.packageDetails.days}D
-              </span>
-              <span className="text-slate-300">•</span>
-              <span className="text-indigo-700 font-bold">
-                {(packageData.pax.adults || 0) + (packageData.pax.children || 0) + (packageData.pax.infants || 0)} Pax ({calculation.adultEquivalent.toFixed(1)} Equiv)
-              </span>
+        {/* Unified Ultra-Compact Tour & Pax Strip (Takes only ~42px) */}
+        <div className="bg-white rounded-xl border border-slate-200 p-2 shadow-2xs mb-2 transition">
+          <div className="flex flex-wrap items-center gap-1.5 text-xs">
+            {/* Tour Name */}
+            <div className="flex-1 min-w-[180px]">
+              <input
+                type="text"
+                placeholder="Tour Package Name *"
+                value={packageData.packageDetails.packageName}
+                onChange={(e) => setPackageData({
+                  ...packageData,
+                  packageDetails: { ...packageData.packageDetails, packageName: e.target.value, updatedAt: new Date().toISOString() }
+                })}
+                className="w-full bg-slate-50 border border-slate-300 rounded px-2 py-1 text-xs font-bold text-slate-900 focus:bg-white focus:outline-none focus:ring-1 focus:ring-blue-500 shadow-2xs"
+                title="Tour Package Name"
+              />
             </div>
+
+            {/* Route */}
+            <div className="w-40 sm:w-48">
+              <input
+                type="text"
+                placeholder="Destination Route *"
+                value={packageData.packageDetails.destination}
+                onChange={(e) => setPackageData({
+                  ...packageData,
+                  packageDetails: { ...packageData.packageDetails, destination: e.target.value, updatedAt: new Date().toISOString() }
+                })}
+                className="w-full bg-slate-50 border border-slate-300 rounded px-2 py-1 text-xs font-bold text-slate-900 focus:bg-white focus:outline-none focus:ring-1 focus:ring-blue-500 shadow-2xs"
+                title="Destination Route"
+              />
+            </div>
+
+            {/* Travel Date */}
+            <div className="w-32">
+              <input
+                type="date"
+                value={packageData.packageDetails.travelDate}
+                onChange={(e) => setPackageData({
+                  ...packageData,
+                  packageDetails: { ...packageData.packageDetails, travelDate: e.target.value, updatedAt: new Date().toISOString() }
+                })}
+                className="w-full bg-slate-50 border border-slate-300 rounded px-1.5 py-1 text-xs font-bold text-slate-900 focus:bg-white focus:outline-none focus:ring-1 focus:ring-blue-500 shadow-2xs"
+                title="Travel Date"
+              />
+            </div>
+
+            {/* Duration Days & Nights */}
+            <div className="flex items-center gap-1 bg-slate-50 border border-slate-300 rounded px-1.5 py-0.5 shadow-2xs">
+              <span className="text-[10px] font-bold text-slate-500">N:</span>
+              <input
+                type="number"
+                min="0"
+                value={packageData.packageDetails.nights ?? ''}
+                onChange={(e) => setPackageData({
+                  ...packageData,
+                  packageDetails: { ...packageData.packageDetails, nights: parsePositiveNumber(e.target.value, 0), updatedAt: new Date().toISOString() }
+                })}
+                className="w-6 text-center text-xs font-black text-slate-900 bg-transparent outline-none"
+                title="Nights"
+              />
+              <span className="text-[10px] font-bold text-slate-400">/</span>
+              <span className="text-[10px] font-bold text-slate-500">D:</span>
+              <input
+                type="number"
+                min="1"
+                value={packageData.packageDetails.days ?? ''}
+                onChange={(e) => setPackageData({
+                  ...packageData,
+                  packageDetails: { ...packageData.packageDetails, days: parsePositiveNumber(e.target.value, 1), updatedAt: new Date().toISOString() }
+                })}
+                className="w-6 text-center text-xs font-black text-slate-900 bg-transparent outline-none"
+                title="Days"
+              />
+            </div>
+
+            <div className="h-4 w-px bg-slate-200 hidden lg:block" />
+
+            {/* Adults */}
+            <div className="flex items-center gap-1 bg-blue-50 border border-blue-200 rounded px-1.5 py-0.5 shadow-2xs" title="Adults (12y+)">
+              <span className="text-[10px] font-extrabold text-blue-900">Adults:</span>
+              <input
+                type="number"
+                min="1"
+                value={packageData.pax.adults ?? ''}
+                onChange={(e) => setPackageData({
+                  ...packageData,
+                  pax: { ...packageData.pax, adults: parsePositiveNumber(e.target.value, 0) }
+                })}
+                className="w-7 text-center text-xs font-black text-blue-950 bg-transparent outline-none"
+              />
+            </div>
+
+            {/* Child */}
+            <div className="flex items-center gap-1 bg-amber-50 border border-amber-200 rounded px-1.5 py-0.5 shadow-2xs" title="Children (5-11y)">
+              <span className="text-[10px] font-extrabold text-amber-900">Child:</span>
+              <input
+                type="number"
+                min="0"
+                value={packageData.pax.children ?? ''}
+                onChange={(e) => setPackageData({
+                  ...packageData,
+                  pax: { ...packageData.pax, children: parsePositiveNumber(e.target.value, 0) }
+                })}
+                className="w-7 text-center text-xs font-black text-amber-950 bg-transparent outline-none"
+              />
+            </div>
+
+            {/* Infant */}
+            <div className="flex items-center gap-1 bg-pink-50 border border-pink-200 rounded px-1.5 py-0.5 shadow-2xs" title="Infants (<5y)">
+              <span className="text-[10px] font-extrabold text-pink-900">Infant:</span>
+              <input
+                type="number"
+                min="0"
+                value={packageData.pax.infants ?? ''}
+                onChange={(e) => setPackageData({
+                  ...packageData,
+                  pax: { ...packageData.pax, infants: parsePositiveNumber(e.target.value, 0) }
+                })}
+                className="w-7 text-center text-xs font-black text-pink-950 bg-transparent outline-none"
+              />
+            </div>
+
+            {/* Pax Rules Toggle Button */}
             <button
-              onClick={() => setIsTopPanelCollapsed(false)}
-              className="text-[11px] font-bold text-blue-600 hover:text-blue-800 flex items-center gap-1 shrink-0 bg-blue-50 px-2 py-0.5 rounded-md border border-blue-200 hover:bg-blue-100 transition cursor-pointer"
+              type="button"
+              onClick={() => setShowPaxRules(!showPaxRules)}
+              className={`p-1 rounded border transition cursor-pointer text-[10px] font-bold flex items-center gap-1 ${
+                showPaxRules
+                  ? 'bg-blue-600 text-white border-blue-600'
+                  : 'bg-slate-50 text-slate-600 border-slate-300 hover:bg-slate-100'
+              }`}
+              title="Child & Infant Cost % Rules"
             >
-              <span>Edit Tour Info</span>
-              <ChevronDown className="w-3.5 h-3.5" />
+              <Settings className="w-3 h-3" />
+              <span className="hidden sm:inline">Rules</span>
+            </button>
+
+            {/* Live Pax summary badge */}
+            <div className="px-2 py-0.5 bg-slate-900 text-white rounded text-[11px] font-black font-brand tracking-wide shrink-0">
+              {(packageData.pax.adults || 0) + (packageData.pax.children || 0) + (packageData.pax.infants || 0)} Pax ({calculation.adultEquivalent.toFixed(1)} Equiv)
+            </div>
+
+            {/* Full View toggle */}
+            <button
+              type="button"
+              onClick={() => setIsTopPanelCollapsed(!isTopPanelCollapsed)}
+              className="text-[10px] font-bold text-slate-500 hover:text-slate-800 ml-auto flex items-center gap-0.5 cursor-pointer bg-slate-100 hover:bg-slate-200 px-2 py-0.5 rounded transition"
+              title="Toggle detailed cards"
+            >
+              <span>{isTopPanelCollapsed ? 'Collapse Cards' : 'Expanded Cards'}</span>
             </button>
           </div>
-        ) : (
-          <div className="mb-2.5">
-            <div className="grid grid-cols-1 xl:grid-cols-12 gap-2.5 items-stretch">
+
+          {/* Optional inline Pax % rules */}
+          {showPaxRules && (
+            <div className="mt-1.5 pt-1.5 border-t border-slate-200 flex flex-wrap items-center gap-3 text-xs bg-slate-50 p-1.5 rounded">
+              <span className="font-bold text-[11px] text-slate-700">Cost Sharing Rules:</span>
+              <div className="flex items-center gap-1">
+                <span className="text-[11px] text-slate-600">Child Rate:</span>
+                <input
+                  type="number"
+                  min="0"
+                  max="100"
+                  value={packageData.pax.childPercentage ?? ''}
+                  onChange={(e) => setPackageData({
+                    ...packageData,
+                    pax: { ...packageData.pax, childPercentage: parsePositiveNumber(e.target.value, 70) }
+                  })}
+                  className="w-12 bg-white border border-slate-300 rounded px-1 text-center font-bold text-xs"
+                />
+                <span className="text-[11px] text-slate-500">%</span>
+              </div>
+              <div className="flex items-center gap-1">
+                <span className="text-[11px] text-slate-600">Infant Rate:</span>
+                <input
+                  type="number"
+                  min="0"
+                  max="100"
+                  value={packageData.pax.infantPercentage ?? ''}
+                  onChange={(e) => setPackageData({
+                    ...packageData,
+                    pax: { ...packageData.pax, infantPercentage: parsePositiveNumber(e.target.value, 0) }
+                  })}
+                  className="w-12 bg-white border border-slate-300 rounded px-1 text-center font-bold text-xs"
+                />
+                <span className="text-[11px] text-slate-500">%</span>
+              </div>
+            </div>
+          )}
+
+          {/* If Full View is clicked, show the expanded cards */}
+          {isTopPanelCollapsed && (
+            <div className="mt-2 pt-2 border-t border-slate-200 grid grid-cols-1 xl:grid-cols-12 gap-2">
               <div className="xl:col-span-7">
                 <PackageDetailsSection
                   packageDetails={packageData.packageDetails}
@@ -236,18 +401,8 @@ export const App: React.FC = () => {
                 />
               </div>
             </div>
-            <div className="flex justify-end mt-0.5">
-              <button
-                onClick={() => setIsTopPanelCollapsed(true)}
-                className="text-[10px] font-bold text-slate-500 hover:text-slate-800 flex items-center gap-1 cursor-pointer transition py-0.5 px-2 rounded hover:bg-slate-200/60"
-                title="Collapse to maximize costing workspace"
-              >
-                <span>Collapse Tour & Pax Header</span>
-                <ChevronUp className="w-3 h-3" />
-              </button>
-            </div>
-          </div>
-        )}
+          )}
+        </div>
 
         {/* 2-Column Responsive Desktop Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-3.5 items-start">
