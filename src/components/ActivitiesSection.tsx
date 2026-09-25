@@ -100,17 +100,17 @@ export const ActivitiesSection: React.FC<ActivitiesSectionProps> = ({
           </button>
         </div>
       ) : (
-        <div className="overflow-x-auto border border-slate-200 rounded-lg shadow-2xs">
+        <div className="border border-slate-200 rounded-lg shadow-2xs overflow-hidden bg-white">
           <table className="w-full text-left text-xs border-collapse">
             <thead className="bg-slate-50 text-slate-600 uppercase text-[11px] font-bold tracking-wider border-b border-slate-200">
               <tr>
-                <th className="py-2 px-2.5 min-w-[200px]">Activity / Safari / Monument</th>
-                <th className="py-2 px-2.5 w-32">Destination</th>
-                <th className="py-2 px-2.5 text-right w-26">Adult Rate</th>
-                <th className="py-2 px-2.5 text-right w-26">Child Rate</th>
-                <th className="py-2 px-1 text-center w-28">Qty (A / C)</th>
-                <th className="py-2 px-2.5 text-right w-28">Subtotal</th>
-                <th className="py-2 px-1 text-center w-16">Actions</th>
+                <th className="py-2 px-2">Activity / Safari / Monument</th>
+                <th className="py-2 px-2 w-24">Destination</th>
+                <th className="py-2 px-1.5 text-right w-20">Adult Rate</th>
+                <th className="py-2 px-1.5 text-right w-20">Child Rate</th>
+                <th className="py-2 px-1 text-center w-22">Qty (A/C)</th>
+                <th className="py-2 px-2 text-right w-22">Subtotal</th>
+                <th className="py-2 px-1 text-center w-12">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-200 bg-white">
@@ -119,52 +119,52 @@ export const ActivitiesSection: React.FC<ActivitiesSectionProps> = ({
                 const hasCustomChild = a.childRate !== null && a.childRate !== undefined;
                 return (
                   <tr key={a.id} className="hover:bg-blue-50/40 transition">
-                    <td className="py-2 px-2.5">
+                    <td className="py-2 px-2">
                       <input
                         type="text"
                         placeholder="e.g. Desert Safari / City Palace"
                         value={a.activityName}
                         onChange={(e) => updateActivity(idx, { ...a, activityName: e.target.value })}
-                        className="w-full bg-white border border-slate-300 rounded-md px-2.5 py-1 text-xs font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
+                        className="w-full bg-white border border-slate-300 rounded-md px-2 py-1 text-xs font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
                       />
                     </td>
-                    <td className="py-2 px-2.5">
+                    <td className="py-2 px-2">
                       <input
                         type="text"
                         placeholder="City"
                         value={a.destination}
                         onChange={(e) => updateActivity(idx, { ...a, destination: e.target.value })}
-                        className="w-full bg-white border border-slate-300 rounded-md px-2.5 py-1 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
+                        className="w-full bg-white border border-slate-300 rounded-md px-2 py-1 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
                       />
                     </td>
-                    <td className="py-2 px-2.5 text-right">
+                    <td className="py-2 px-1.5 text-right">
                       <input
                         type="number"
                         min="0"
                         value={a.adultRate || ''}
                         onChange={(e) => updateActivity(idx, { ...a, adultRate: parsePositiveNumber(e.target.value, 0) })}
-                        className="w-22 bg-white border border-slate-300 rounded-md px-2.5 py-1 text-right font-black text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
+                        className="w-full bg-white border border-slate-300 rounded-md px-1.5 py-1 text-right font-black text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
                       />
                     </td>
-                    <td className="py-2 px-2.5 text-right">
+                    <td className="py-2 px-1.5 text-right">
                       <input
                         type="number"
                         min="0"
                         placeholder={`Auto (${pax.childPercentage}%)`}
                         value={hasCustomChild ? (a.childRate as number) : ''}
                         onChange={(e) => updateActivity(idx, { ...a, childRate: e.target.value === '' ? null : parsePositiveNumber(e.target.value, 0) })}
-                        className="w-22 bg-white border border-slate-300 rounded-md px-2.5 py-1 text-right text-xs font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
+                        className="w-full bg-white border border-slate-300 rounded-md px-1.5 py-1 text-right text-xs font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
                       />
                     </td>
                     <td className="py-2 px-1 text-center">
-                      <div className="inline-flex items-center gap-1">
+                      <div className="inline-flex items-center gap-0.5">
                         <input
                           type="number"
                           min="0"
                           title="Adults"
                           value={a.adultQuantity ?? ''}
                           onChange={(e) => updateActivity(idx, { ...a, adultQuantity: parsePositiveNumber(e.target.value, 0) })}
-                          className="w-10 bg-white border border-slate-300 rounded-md py-1 text-center font-black text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
+                          className="w-9 bg-white border border-slate-300 rounded-md py-1 text-center font-black text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
                         />
                         <span className="text-slate-400 font-bold">/</span>
                         <input
@@ -173,15 +173,15 @@ export const ActivitiesSection: React.FC<ActivitiesSectionProps> = ({
                           title="Children"
                           value={a.childQuantity ?? ''}
                           onChange={(e) => updateActivity(idx, { ...a, childQuantity: parsePositiveNumber(e.target.value, 0) })}
-                          className="w-10 bg-white border border-slate-300 rounded-md py-1 text-center font-black text-xs text-amber-800 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
+                          className="w-9 bg-white border border-slate-300 rounded-md py-1 text-center font-black text-xs text-amber-800 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
                         />
                       </div>
                     </td>
-                    <td className="py-2 px-2.5 text-right font-black text-blue-700 font-brand text-xs sm:text-sm whitespace-nowrap">
+                    <td className="py-2 px-2 text-right font-black text-blue-700 font-brand text-xs whitespace-nowrap">
                       {formatINR(subtotal)}
                     </td>
                     <td className="py-2 px-1 text-center">
-                      <div className="flex items-center justify-center gap-1">
+                      <div className="flex items-center justify-center gap-0.5">
                         <button
                           type="button"
                           onClick={() => duplicateActivity(idx)}

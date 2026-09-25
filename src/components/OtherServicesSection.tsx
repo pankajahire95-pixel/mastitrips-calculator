@@ -94,16 +94,16 @@ export const OtherServicesSection: React.FC<OtherServicesSectionProps> = ({
           </button>
         </div>
       ) : (
-        <div className="overflow-x-auto border border-slate-200 rounded-lg shadow-2xs">
+        <div className="border border-slate-200 rounded-lg shadow-2xs overflow-hidden bg-white">
           <table className="w-full text-left text-xs border-collapse">
             <thead className="bg-slate-50 text-slate-600 uppercase text-[11px] font-bold tracking-wider border-b border-slate-200">
               <tr>
-                <th className="py-2 px-2.5 min-w-[200px]">Service Name &amp; Description</th>
-                <th className="py-2 px-1 text-center w-16">Qty</th>
-                <th className="py-2 px-2.5 text-right w-26">Rate (₹)</th>
-                <th className="py-2 px-2.5 min-w-[160px]">Notes</th>
-                <th className="py-2 px-2.5 text-right w-28">Subtotal</th>
-                <th className="py-2 px-1 text-center w-16">Actions</th>
+                <th className="py-2 px-2">Service Name &amp; Description</th>
+                <th className="py-2 px-1 text-center w-12">Qty</th>
+                <th className="py-2 px-1.5 text-right w-20">Rate (₹)</th>
+                <th className="py-2 px-2 w-32">Notes</th>
+                <th className="py-2 px-2 text-right w-22">Subtotal</th>
+                <th className="py-2 px-1 text-center w-12">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-200 bg-white">
@@ -111,13 +111,13 @@ export const OtherServicesSection: React.FC<OtherServicesSectionProps> = ({
                 const subtotal = calculateOtherServiceItemCost(o);
                 return (
                   <tr key={o.id} className="hover:bg-blue-50/40 transition">
-                    <td className="py-2 px-2.5">
+                    <td className="py-2 px-2">
                       <input
                         type="text"
                         placeholder="e.g. Travel Insurance / Welcome Garland"
                         value={o.serviceName}
                         onChange={(e) => updateService(idx, { ...o, serviceName: e.target.value })}
-                        className="w-full bg-white border border-slate-300 rounded-md px-2.5 py-1 text-xs font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
+                        className="w-full bg-white border border-slate-300 rounded-md px-2 py-1 text-xs font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
                       />
                     </td>
                     <td className="py-2 px-1 text-center">
@@ -126,32 +126,32 @@ export const OtherServicesSection: React.FC<OtherServicesSectionProps> = ({
                         min="1"
                         value={o.quantity || ''}
                         onChange={(e) => updateService(idx, { ...o, quantity: parsePositiveNumber(e.target.value, 1) })}
-                        className="w-12 bg-white border border-slate-300 rounded-md py-1 text-center font-black text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
+                        className="w-10 bg-white border border-slate-300 rounded-md py-1 text-center font-black text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
                       />
                     </td>
-                    <td className="py-2 px-2.5 text-right">
+                    <td className="py-2 px-1.5 text-right">
                       <input
                         type="number"
                         min="0"
                         value={o.rate || ''}
                         onChange={(e) => updateService(idx, { ...o, rate: parsePositiveNumber(e.target.value, 0) })}
-                        className="w-22 bg-white border border-slate-300 rounded-md px-2.5 py-1 text-right font-black text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
+                        className="w-full bg-white border border-slate-300 rounded-md px-1.5 py-1 text-right font-black text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
                       />
                     </td>
-                    <td className="py-2 px-2.5">
+                    <td className="py-2 px-2">
                       <input
                         type="text"
                         placeholder="Optional remarks"
                         value={o.notes || ''}
                         onChange={(e) => updateService(idx, { ...o, notes: e.target.value })}
-                        className="w-full bg-white border border-slate-300 rounded-md px-2.5 py-1 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
+                        className="w-full bg-white border border-slate-300 rounded-md px-2 py-1 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
                       />
                     </td>
-                    <td className="py-2 px-2.5 text-right font-black text-blue-700 font-brand text-xs sm:text-sm whitespace-nowrap">
+                    <td className="py-2 px-2 text-right font-black text-blue-700 font-brand text-xs whitespace-nowrap">
                       {formatINR(subtotal)}
                     </td>
                     <td className="py-2 px-1 text-center">
-                      <div className="flex items-center justify-center gap-1">
+                      <div className="flex items-center justify-center gap-0.5">
                         <button
                           type="button"
                           onClick={() => duplicateService(idx)}

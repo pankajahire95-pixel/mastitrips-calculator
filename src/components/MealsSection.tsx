@@ -98,17 +98,17 @@ export const MealsSection: React.FC<MealsSectionProps> = ({
           </button>
         </div>
       ) : (
-        <div className="overflow-x-auto border border-slate-200 rounded-lg shadow-2xs">
+        <div className="border border-slate-200 rounded-lg shadow-2xs overflow-hidden bg-white">
           <table className="w-full text-left text-xs border-collapse">
             <thead className="bg-slate-50 text-slate-600 uppercase text-[11px] font-bold tracking-wider border-b border-slate-200">
               <tr>
-                <th className="py-2 px-2.5 min-w-[200px]">Meal Name / Description</th>
-                <th className="py-2 px-2.5 w-36">Type</th>
-                <th className="py-2 px-1 text-center w-14">Meals</th>
-                <th className="py-2 px-2.5 text-right w-26">Adult Rate</th>
-                <th className="py-2 px-2.5 text-right w-26">Child Rate</th>
-                <th className="py-2 px-2.5 text-right w-28">Subtotal</th>
-                <th className="py-2 px-1 text-center w-16">Actions</th>
+                <th className="py-2 px-2">Meal Name / Description</th>
+                <th className="py-2 px-2 w-28">Type</th>
+                <th className="py-2 px-1 text-center w-12">Meals</th>
+                <th className="py-2 px-1.5 text-right w-20">Adult Rate</th>
+                <th className="py-2 px-1.5 text-right w-22">Child Rate</th>
+                <th className="py-2 px-2 text-right w-22">Subtotal</th>
+                <th className="py-2 px-1 text-center w-12">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-200 bg-white">
@@ -117,20 +117,20 @@ export const MealsSection: React.FC<MealsSectionProps> = ({
                 const hasCustomChild = m.childRate !== null && m.childRate !== undefined;
                 return (
                   <tr key={m.id} className="hover:bg-blue-50/40 transition">
-                    <td className="py-2 px-2.5">
+                    <td className="py-2 px-2">
                       <input
                         type="text"
                         placeholder="e.g. Traditional Thali"
                         value={m.mealName}
                         onChange={(e) => updateMeal(idx, { ...m, mealName: e.target.value })}
-                        className="w-full bg-white border border-slate-300 rounded-md px-2.5 py-1 text-xs font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
+                        className="w-full bg-white border border-slate-300 rounded-md px-2 py-1 text-xs font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
                       />
                     </td>
-                    <td className="py-2 px-2.5">
+                    <td className="py-2 px-2">
                       <select
                         value={m.mealType}
                         onChange={(e) => updateMeal(idx, { ...m, mealType: e.target.value as MealType })}
-                        className="w-full bg-white border border-slate-300 rounded-md px-2 py-1 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
+                        className="w-full bg-white border border-slate-300 rounded-md px-1.5 py-1 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
                       >
                         <option value="Breakfast">Breakfast</option>
                         <option value="Lunch">Lunch</option>
@@ -147,33 +147,33 @@ export const MealsSection: React.FC<MealsSectionProps> = ({
                         min="1"
                         value={m.numberOfMeals || ''}
                         onChange={(e) => updateMeal(idx, { ...m, numberOfMeals: parsePositiveNumber(e.target.value, 1) })}
-                        className="w-12 bg-white border border-slate-300 rounded-md py-1 text-center font-black text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
+                        className="w-10 bg-white border border-slate-300 rounded-md py-1 text-center font-black text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
                       />
                     </td>
-                    <td className="py-2 px-2.5 text-right">
+                    <td className="py-2 px-1.5 text-right">
                       <input
                         type="number"
                         min="0"
                         value={m.adultRate || ''}
                         onChange={(e) => updateMeal(idx, { ...m, adultRate: parsePositiveNumber(e.target.value, 0) })}
-                        className="w-22 bg-white border border-slate-300 rounded-md px-2.5 py-1 text-right font-black text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
+                        className="w-full bg-white border border-slate-300 rounded-md px-1.5 py-1 text-right font-black text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
                       />
                     </td>
-                    <td className="py-2 px-2.5 text-right">
+                    <td className="py-2 px-1.5 text-right">
                       <input
                         type="number"
                         min="0"
                         placeholder={`Auto (${pax.childPercentage}%)`}
                         value={hasCustomChild ? (m.childRate as number) : ''}
                         onChange={(e) => updateMeal(idx, { ...m, childRate: e.target.value === '' ? null : parsePositiveNumber(e.target.value, 0) })}
-                        className="w-22 bg-white border border-slate-300 rounded-md px-2.5 py-1 text-right text-xs font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
+                        className="w-full bg-white border border-slate-300 rounded-md px-1.5 py-1 text-right text-xs font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
                       />
                     </td>
-                    <td className="py-2 px-2.5 text-right font-black text-blue-700 font-brand text-xs sm:text-sm whitespace-nowrap">
+                    <td className="py-2 px-2 text-right font-black text-blue-700 font-brand text-xs whitespace-nowrap">
                       {formatINR(subtotal)}
                     </td>
                     <td className="py-2 px-1 text-center">
-                      <div className="flex items-center justify-center gap-1">
+                      <div className="flex items-center justify-center gap-0.5">
                         <button
                           type="button"
                           onClick={() => duplicateMeal(idx)}

@@ -100,18 +100,18 @@ export const VehiclesSection: React.FC<VehiclesSectionProps> = ({
           </button>
         </div>
       ) : (
-        <div className="overflow-x-auto border border-slate-200 rounded-lg shadow-2xs">
+        <div className="border border-slate-200 rounded-lg shadow-2xs overflow-hidden bg-white">
           <table className="w-full text-left text-xs border-collapse">
             <thead className="bg-slate-50 text-slate-600 uppercase text-[11px] font-bold tracking-wider border-b border-slate-200">
               <tr>
-                <th className="py-2 px-2.5 w-36">Vehicle Type</th>
-                <th className="py-2 px-2.5 min-w-[200px]">Vehicle Name / Model</th>
-                <th className="py-2 px-1 text-center w-14">Qty</th>
-                <th className="py-2 px-1 text-center w-14">Days</th>
-                <th className="py-2 px-2.5 w-26">Basis</th>
-                <th className="py-2 px-2.5 text-right w-26">Rate (₹)</th>
-                <th className="py-2 px-2.5 text-right w-28">Subtotal</th>
-                <th className="py-2 px-1 text-center w-16">Actions</th>
+                <th className="py-2 px-2 w-28">Vehicle Type</th>
+                <th className="py-2 px-2">Vehicle Name / Model</th>
+                <th className="py-2 px-1 text-center w-12">Qty</th>
+                <th className="py-2 px-1 text-center w-12">Days</th>
+                <th className="py-2 px-1.5 w-22">Basis</th>
+                <th className="py-2 px-1.5 text-right w-20">Rate (₹)</th>
+                <th className="py-2 px-2 text-right w-22">Subtotal</th>
+                <th className="py-2 px-1 text-center w-12">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-200 bg-white">
@@ -119,7 +119,7 @@ export const VehiclesSection: React.FC<VehiclesSectionProps> = ({
                 const subtotal = calculateVehicleItemCost(v);
                 return (
                   <tr key={v.id} className="hover:bg-blue-50/40 transition">
-                    <td className="py-2 px-2.5">
+                    <td className="py-2 px-2">
                       <select
                         value={v.vehicleType}
                         onChange={(e) => updateVehicle(idx, { ...v, vehicleType: e.target.value as VehicleType })}
@@ -135,12 +135,12 @@ export const VehiclesSection: React.FC<VehiclesSectionProps> = ({
                         <option value="Custom Vehicle">Custom Vehicle</option>
                       </select>
                     </td>
-                    <td className="py-2 px-2.5">
+                    <td className="py-2 px-2">
                       <input
                         type="text"
                         value={v.vehicleName}
                         onChange={(e) => updateVehicle(idx, { ...v, vehicleName: e.target.value })}
-                        className="w-full bg-white border border-slate-300 rounded-md px-2.5 py-1 text-xs font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
+                        className="w-full bg-white border border-slate-300 rounded-md px-2 py-1 text-xs font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
                       />
                     </td>
                     <td className="py-2 px-1 text-center">
@@ -149,7 +149,7 @@ export const VehiclesSection: React.FC<VehiclesSectionProps> = ({
                         min="1"
                         value={v.numberOfVehicles || ''}
                         onChange={(e) => updateVehicle(idx, { ...v, numberOfVehicles: parsePositiveNumber(e.target.value, 1) })}
-                        className="w-12 bg-white border border-slate-300 rounded-md py-1 text-center font-black text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
+                        className="w-10 bg-white border border-slate-300 rounded-md py-1 text-center font-black text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
                       />
                     </td>
                     <td className="py-2 px-1 text-center">
@@ -159,34 +159,34 @@ export const VehiclesSection: React.FC<VehiclesSectionProps> = ({
                         disabled={v.costingBasis !== 'per_day'}
                         value={v.costingBasis === 'per_day' ? (v.numberOfDays || '') : '-'}
                         onChange={(e) => updateVehicle(idx, { ...v, numberOfDays: parsePositiveNumber(e.target.value, 1) })}
-                        className="w-12 bg-white border border-slate-300 rounded-md py-1 text-center font-black text-xs text-slate-900 disabled:bg-slate-100 disabled:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
+                        className="w-10 bg-white border border-slate-300 rounded-md py-1 text-center font-black text-xs text-slate-900 disabled:bg-slate-100 disabled:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
                       />
                     </td>
-                    <td className="py-2 px-2.5">
+                    <td className="py-2 px-1.5">
                       <select
                         value={v.costingBasis}
                         onChange={(e) => updateVehicle(idx, { ...v, costingBasis: e.target.value as VehicleCostingBasis })}
-                        className="w-full bg-white border border-slate-300 rounded-md px-2 py-1 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
+                        className="w-full bg-white border border-slate-300 rounded-md px-1.5 py-1 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
                       >
                         <option value="per_day">Per Day</option>
                         <option value="per_trip">Per Trip</option>
                         <option value="fixed">Fixed Rate</option>
                       </select>
                     </td>
-                    <td className="py-2 px-2.5 text-right">
+                    <td className="py-2 px-1.5 text-right">
                       <input
                         type="number"
                         min="0"
                         value={v.ratePerDay || ''}
                         onChange={(e) => updateVehicle(idx, { ...v, ratePerDay: parsePositiveNumber(e.target.value, 0) })}
-                        className="w-22 bg-white border border-slate-300 rounded-md px-2.5 py-1 text-right font-black text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
+                        className="w-full bg-white border border-slate-300 rounded-md px-1.5 py-1 text-right font-black text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
                       />
                     </td>
-                    <td className="py-2 px-2.5 text-right font-black text-blue-700 font-brand text-xs sm:text-sm whitespace-nowrap">
+                    <td className="py-2 px-2 text-right font-black text-blue-700 font-brand text-xs whitespace-nowrap">
                       {formatINR(subtotal)}
                     </td>
                     <td className="py-2 px-1 text-center">
-                      <div className="flex items-center justify-center gap-1">
+                      <div className="flex items-center justify-center gap-0.5">
                         <button
                           type="button"
                           onClick={() => duplicateVehicle(idx)}

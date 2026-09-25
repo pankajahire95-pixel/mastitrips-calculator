@@ -264,14 +264,14 @@ export const LiveSummary: React.FC<LiveSummaryProps> = ({
             {formatINR(sellingPrice)}
           </div>
 
-          <div className="mt-1.5 pt-1.5 border-t border-orange-400/40 grid grid-cols-2 gap-1.5 text-xs">
-            <div className="bg-orange-700/40 p-1.5 rounded border border-orange-400/30">
-              <div className="text-[9px] text-orange-200 font-bold uppercase">Per Adult</div>
+          <div className={`mt-1.5 pt-1.5 border-t border-orange-400/40 grid ${pax.children > 0 ? 'grid-cols-2' : 'grid-cols-1'} gap-1.5 text-xs`}>
+            <div className="bg-orange-700/40 px-2 py-1.5 rounded border border-orange-400/30 flex justify-between items-center">
+              <div className="text-[10px] text-orange-200 font-bold uppercase">Per Adult</div>
               <div className="text-xs font-black text-white font-brand">{formatINR(adultSellingPrice)}</div>
             </div>
             {pax.children > 0 && (
-              <div className="bg-orange-700/40 p-1.5 rounded border border-orange-400/30">
-                <div className="text-[9px] text-orange-200 font-bold uppercase">Per Child</div>
+              <div className="bg-orange-700/40 px-2 py-1.5 rounded border border-orange-400/30 flex justify-between items-center">
+                <div className="text-[10px] text-orange-200 font-bold uppercase">Per Child</div>
                 <div className="text-xs font-black text-white font-brand">{formatINR(childSellingPrice)}</div>
               </div>
             )}
