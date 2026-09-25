@@ -23,7 +23,7 @@ export const PaxDetailsSection: React.FC<PaxDetailsSectionProps> = ({
   const adultEquiv = (pax.adults || 0) + ((pax.children || 0) * ((pax.childPercentage || 70) / 100)) + ((pax.infants || 0) * ((pax.infantPercentage || 0) / 100));
 
   return (
-    <section className="bg-white rounded-xl border border-slate-200 shadow-2xs p-3 sm:p-3.5 transition hover:border-slate-300">
+    <section className="bg-white rounded-xl border border-slate-200 shadow-2xs p-3 sm:p-3.5 transition hover:border-slate-300 h-full flex flex-col justify-between">
       {/* Compact Header */}
       <div className="flex flex-wrap items-center justify-between gap-2 mb-2.5 pb-2 border-b border-slate-100">
         <div className="flex items-center gap-2">

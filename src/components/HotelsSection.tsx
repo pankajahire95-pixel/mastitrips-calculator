@@ -249,48 +249,48 @@ export const HotelsSection: React.FC<HotelsSectionProps> = ({
   const totalHotelNights = hotels.reduce((sum, h) => sum + (h.nights || 0), 0);
 
   return (
-    <section className="bg-white rounded-lg border border-slate-300 shadow-2xs p-2 text-xs">
-      {/* 1. Header Toolbar (Classic ERP style) */}
-      <div className="flex flex-wrap items-center justify-between gap-1.5 pb-1.5 border-b border-slate-200 mb-1.5">
-        <div className="flex items-center gap-1.5">
-          <div className="w-5 h-5 rounded bg-blue-600 text-white flex items-center justify-center font-bold">
-            <Building2 className="w-3 h-3" />
+    <section className="bg-white rounded-xl border border-slate-200 shadow-2xs p-3 transition">
+      {/* 1. Header Toolbar */}
+      <div className="flex flex-wrap items-center justify-between gap-2 pb-2.5 border-b border-slate-100 mb-2.5">
+        <div className="flex items-center gap-2">
+          <div className="w-6 h-6 rounded-md bg-blue-600 text-white flex items-center justify-center font-bold shadow-2xs">
+            <Building2 className="w-3.5 h-3.5" />
           </div>
-          <span className="font-bold text-slate-800 uppercase tracking-wider text-[11px]">
-            Hotels &amp; Accommodations
+          <span className="font-bold text-slate-800 uppercase tracking-wider text-xs font-brand">
+            3. Hotels &amp; Accommodations
           </span>
-          <span className="px-1.5 py-0.2 bg-blue-50 text-blue-700 text-[10px] font-bold rounded border border-blue-200">
-            {hotels.length} Stays • {totalHotelNights}N
+          <span className="px-2 py-0.5 bg-blue-50 text-blue-700 text-xs font-bold rounded-md border border-blue-200">
+            {hotels.length} Stays • {totalHotelNights} Nights
           </span>
         </div>
 
-        <div className="flex items-center gap-2">
-          <span className="text-[11px] font-bold text-slate-600">
-            Total Net: <strong className="text-blue-700 font-brand text-xs">{formatINR(totalHotelCost)}</strong>
+        <div className="flex items-center gap-3">
+          <span className="text-xs font-bold text-slate-600">
+            Total Net: <strong className="text-blue-700 font-brand text-sm ml-1">{formatINR(totalHotelCost)}</strong>
           </span>
 
           <button
             type="button"
             onClick={addHotel}
-            className="flex items-center gap-1 px-2 py-0.5 text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 rounded shadow-xs transition cursor-pointer"
+            className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-white bg-blue-600 hover:bg-blue-700 rounded-lg shadow-xs transition cursor-pointer"
           >
-            <Plus className="w-3 h-3" />
+            <Plus className="w-3.5 h-3.5" />
             <span>Add Stay</span>
           </button>
         </div>
       </div>
 
-      {/* 2. Room Allocation Toolbar (Single line strip) */}
-      <div className="bg-slate-50 border border-slate-200 rounded px-2 py-1 mb-1.5 flex flex-wrap items-center justify-between gap-1.5 text-[11px]">
-        <div className="flex items-center gap-2 flex-wrap">
-          <span className="font-extrabold text-slate-700 flex items-center gap-1">
-            <Layers className="w-3 h-3 text-blue-600" />
+      {/* 2. Room Allocation Toolbar (Proper, Comfortable Input Strip) */}
+      <div className="bg-slate-50/80 border border-slate-200 rounded-lg px-3 py-2 mb-2.5 flex flex-wrap items-center justify-between gap-2 text-xs">
+        <div className="flex items-center gap-2.5 flex-wrap">
+          <span className="font-extrabold text-slate-700 flex items-center gap-1.5">
+            <Layers className="w-3.5 h-3.5 text-blue-600" />
             Room Allocation:
           </span>
 
           {/* Double Rooms */}
-          <div className="flex items-center gap-1 bg-white border border-slate-300 rounded px-1.5 py-0.2">
-            <span className="text-slate-600 font-semibold">Dbl (2/Rm):</span>
+          <div className="flex items-center gap-1.5 bg-white border border-slate-300 rounded-md px-2 py-1 shadow-2xs">
+            <span className="text-slate-600 font-semibold">Double (2/Rm):</span>
             <input
               type="number"
               min="0"
@@ -299,13 +299,13 @@ export const HotelsSection: React.FC<HotelsSectionProps> = ({
                 ...roomAllocation,
                 doubleRooms: parsePositiveNumber(e.target.value, 0),
               })}
-              className="w-7 text-center font-black text-slate-900 bg-transparent outline-none text-xs"
+              className="w-9 text-center font-black text-slate-900 bg-transparent outline-none text-xs"
             />
           </div>
 
           {/* Triple Rooms */}
-          <div className="flex items-center gap-1 bg-white border border-blue-300 rounded px-1.5 py-0.2">
-            <span className="text-blue-800 font-semibold">Trpl (3/Rm):</span>
+          <div className="flex items-center gap-1.5 bg-white border border-blue-300 rounded-md px-2 py-1 shadow-2xs">
+            <span className="text-blue-800 font-semibold">Triple (3/Rm):</span>
             <input
               type="number"
               min="0"
@@ -314,12 +314,12 @@ export const HotelsSection: React.FC<HotelsSectionProps> = ({
                 ...roomAllocation,
                 tripleRooms: parsePositiveNumber(e.target.value, 0),
               })}
-              className="w-7 text-center font-black text-blue-900 bg-transparent outline-none text-xs"
+              className="w-9 text-center font-black text-blue-900 bg-transparent outline-none text-xs"
             />
           </div>
 
           {/* Quad Rooms */}
-          <div className="flex items-center gap-1 bg-white border border-indigo-300 rounded px-1.5 py-0.2">
+          <div className="flex items-center gap-1.5 bg-white border border-indigo-300 rounded-md px-2 py-1 shadow-2xs">
             <span className="text-indigo-800 font-semibold">Quad (4/Rm):</span>
             <input
               type="number"
@@ -329,35 +329,35 @@ export const HotelsSection: React.FC<HotelsSectionProps> = ({
                 ...roomAllocation,
                 quadRooms: parsePositiveNumber(e.target.value, 0),
               })}
-              className="w-7 text-center font-black text-indigo-900 bg-transparent outline-none text-xs"
+              className="w-9 text-center font-black text-indigo-900 bg-transparent outline-none text-xs"
             />
           </div>
 
           {/* Capacity Status */}
-          <span className={`inline-flex items-center gap-1 px-1.5 py-0.2 rounded text-[10px] font-extrabold ${
+          <span className={`inline-flex items-center gap-1.5 px-2 py-1 rounded-md text-xs font-extrabold ${
             isTourCapacitySufficient
               ? 'bg-emerald-100 text-emerald-900 border border-emerald-300'
               : 'bg-amber-100 text-amber-900 border border-amber-300'
           }`}>
             {isTourCapacitySufficient ? (
-              <CheckCircle2 className="w-3 h-3 text-emerald-600" />
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
             ) : (
-              <ShieldAlert className="w-3 h-3 text-amber-600" />
+              <ShieldAlert className="w-3.5 h-3.5 text-amber-600" />
             )}
-            <span>Cap: <strong>{totalAllocatedCapacity} Pax</strong> ({totalPayingPax} Req)</span>
+            <span>Capacity: <strong>{totalAllocatedCapacity} Pax</strong> ({totalPayingPax} Req)</span>
           </span>
         </div>
 
         {/* 1-Click Suggestions */}
         {roomSuggestions.length > 0 && totalPayingPax > 0 && (
-          <div className="flex items-center gap-1">
-            <span className="text-[10px] text-slate-500 font-bold hidden md:inline">Quick Setup:</span>
+          <div className="flex items-center gap-1.5">
+            <span className="text-xs text-slate-500 font-semibold hidden md:inline">Quick Setup:</span>
             {roomSuggestions.slice(0, 2).map((sug, i) => (
               <button
                 key={i}
                 type="button"
                 onClick={() => onUpdateRoomAllocation(sug.allocation)}
-                className="px-1.5 py-0.2 bg-white hover:bg-blue-600 hover:text-white border border-blue-200 rounded text-[10px] font-bold text-blue-900 transition cursor-pointer"
+                className="px-2 py-1 bg-white hover:bg-blue-600 hover:text-white border border-blue-200 rounded-md text-xs font-bold text-blue-900 transition cursor-pointer shadow-2xs"
                 title="1-Click apply room distribution"
               >
                 {sug.label}
@@ -367,33 +367,33 @@ export const HotelsSection: React.FC<HotelsSectionProps> = ({
         )}
       </div>
 
-      {/* 3. High-Density Spreadsheet Table (Classic Old System Style) */}
+      {/* 3. Proper Spreadsheet Table */}
       {hotels.length === 0 ? (
-        <div className="text-center py-4 border border-dashed border-slate-300 rounded bg-slate-50/50">
+        <div className="text-center py-6 border border-dashed border-slate-300 rounded-lg bg-slate-50/50">
           <p className="text-xs text-slate-500 font-semibold">No hotel stays added</p>
           <button
             type="button"
             onClick={addHotel}
-            className="mt-1 text-xs text-blue-600 font-bold hover:underline"
+            className="mt-1.5 text-xs text-blue-600 font-bold hover:underline cursor-pointer"
           >
             + Add First Destination Stay
           </button>
         </div>
       ) : (
-        <div className="overflow-x-auto border border-slate-300 rounded">
+        <div className="border border-slate-200 rounded-lg shadow-2xs overflow-hidden bg-white">
           <table className="w-full text-left text-xs border-collapse">
-            <thead className="bg-slate-100 text-slate-700 uppercase text-[10px] font-extrabold border-b border-slate-300">
+            <thead className="bg-slate-50 text-slate-600 uppercase text-[11px] font-bold tracking-wider border-b border-slate-200">
               <tr>
-                <th className="py-1 px-1.5 text-center w-7">#</th>
-                <th className="py-1 px-1.5 w-32">Destination *</th>
-                <th className="py-1 px-1 text-center w-12">Nts</th>
-                <th className="py-1 px-1.5 min-w-[200px]">Hotel Name / Options *</th>
-                <th className="py-1 px-1.5 w-28">Room Category</th>
-                <th className="py-1 px-1 w-20 text-center">Plan</th>
-                <th className="py-1 px-1.5 w-20 text-right">Dbl Rate (₹)</th>
-                <th className="py-1 px-1.5 w-20 text-right">Ex.Bed (₹)</th>
-                <th className="py-1 px-1.5 w-24 text-right">Subtotal</th>
-                <th className="py-1 px-1 text-center w-14">Actions</th>
+                <th className="py-2 px-1 text-center w-7">#</th>
+                <th className="py-2 px-2 w-28">Destination *</th>
+                <th className="py-2 px-1 text-center w-12">Nights</th>
+                <th className="py-2 px-2">Hotel Name / Options *</th>
+                <th className="py-2 px-2 w-24">Room Category</th>
+                <th className="py-2 px-1 text-center w-14">Plan</th>
+                <th className="py-2 px-1.5 w-20 text-right">Dbl Rate (₹)</th>
+                <th className="py-2 px-1.5 w-18 text-right">Ex.Bed (₹)</th>
+                <th className="py-2 px-2 w-22 text-right">Subtotal</th>
+                <th className="py-2 px-1 text-center w-12">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-200 bg-white">
@@ -405,41 +405,41 @@ export const HotelsSection: React.FC<HotelsSectionProps> = ({
                 return (
                   <tr key={normalized.id} className="hover:bg-blue-50/40 transition">
                     {/* Index */}
-                    <td className="py-1 px-1.5 text-center font-bold text-slate-500 bg-slate-50/80">
+                    <td className="py-2 px-1 text-center font-bold text-slate-500 bg-slate-50/50">
                       {hotelIndex + 1}
                     </td>
 
                     {/* Destination City */}
-                    <td className="py-1 px-1.5">
+                    <td className="py-2 px-2">
                       <input
                         type="text"
                         placeholder="e.g. Amritsar"
                         value={normalized.destination}
                         onChange={(e) => updateDestinationFields(hotelIndex, { destination: e.target.value })}
-                        className="w-full bg-white border border-slate-300 rounded px-1.5 py-0.5 text-xs font-bold text-slate-900 focus:outline-none focus:border-blue-500"
+                        className="w-full bg-white border border-slate-300 rounded-md px-2 py-1 text-xs font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
                       />
                     </td>
 
                     {/* Nights */}
-                    <td className="py-1 px-1 text-center">
+                    <td className="py-2 px-1 text-center">
                       <input
                         type="number"
                         min="1"
                         value={normalized.nights || ''}
                         onChange={(e) => updateDestinationFields(hotelIndex, { nights: parsePositiveNumber(e.target.value, 1) })}
-                        className="w-10 text-center bg-white border border-slate-300 rounded py-0.5 text-xs font-black text-slate-900 focus:outline-none focus:border-blue-500"
+                        className="w-10 text-center bg-white border border-slate-300 rounded-md py-1 text-xs font-black text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
                       />
                     </td>
 
                     {/* Hotel Name + Multi-Option Selector */}
-                    <td className="py-1 px-1.5">
+                    <td className="py-2 px-2">
                       <div className="flex items-center gap-1">
                         <input
                           type="text"
                           placeholder="e.g. AK Continental 3*"
                           value={activeOption.hotelName}
                           onChange={(e) => updateHotelOption(hotelIndex, activeOption.id, { hotelName: e.target.value })}
-                          className="flex-1 bg-white border border-slate-300 rounded px-1.5 py-0.5 text-xs font-bold text-slate-900 focus:outline-none focus:border-blue-500"
+                          className="flex-1 min-w-0 bg-white border border-slate-300 rounded-md px-2 py-1 text-xs font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
                         />
 
                         {/* Option switcher if multi-options exist */}
@@ -447,12 +447,12 @@ export const HotelsSection: React.FC<HotelsSectionProps> = ({
                           <select
                             value={selectedOptionId}
                             onChange={(e) => selectHotelOptionForCalculation(hotelIndex, e.target.value)}
-                            className="bg-blue-50 border border-blue-300 rounded px-1 py-0.5 text-[10px] font-bold text-blue-900 cursor-pointer"
+                            className="bg-blue-50 border border-blue-300 rounded-md px-1.5 py-1 text-[11px] font-bold text-blue-900 cursor-pointer shadow-2xs max-w-[100px] shrink-0 truncate"
                             title="Switch active hotel option"
                           >
                             {options.map((opt, i) => (
                               <option key={opt.id} value={opt.id}>
-                                Opt {i + 1}: {opt.hotelName || 'Option'} (₹{opt.doubleRate})
+                                Opt {i + 1} (₹{opt.doubleRate})
                               </option>
                             ))}
                           </select>
@@ -462,7 +462,7 @@ export const HotelsSection: React.FC<HotelsSectionProps> = ({
                         <button
                           type="button"
                           onClick={() => addHotelOption(hotelIndex)}
-                          className="px-1 py-0.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded text-[10px] font-bold border border-slate-300 shrink-0"
+                          className="px-1.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-md text-[11px] font-bold border border-slate-300 shrink-0 transition cursor-pointer shadow-2xs"
                           title="Add alternative hotel option"
                         >
                           +Opt
@@ -471,22 +471,22 @@ export const HotelsSection: React.FC<HotelsSectionProps> = ({
                     </td>
 
                     {/* Room Category */}
-                    <td className="py-1 px-1.5">
+                    <td className="py-2 px-2">
                       <input
                         type="text"
                         placeholder="Deluxe Room"
                         value={activeOption.roomCategory}
                         onChange={(e) => updateHotelOption(hotelIndex, activeOption.id, { roomCategory: e.target.value })}
-                        className="w-full bg-white border border-slate-300 rounded px-1.5 py-0.5 text-xs font-semibold text-slate-800 focus:outline-none focus:border-blue-500"
+                        className="w-full bg-white border border-slate-300 rounded-md px-2 py-1 text-xs font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
                       />
                     </td>
 
                     {/* Meal Plan */}
-                    <td className="py-1 px-1 text-center">
+                    <td className="py-2 px-1 text-center">
                       <select
                         value={activeOption.mealPlan}
                         onChange={(e) => updateHotelOption(hotelIndex, activeOption.id, { mealPlan: e.target.value as MealPlanType })}
-                        className="w-full bg-white border border-slate-300 rounded px-1 py-0.5 text-xs font-bold text-slate-800 text-center focus:outline-none focus:border-blue-500"
+                        className="w-full bg-white border border-slate-300 rounded-md px-1 py-1 text-xs font-bold text-slate-800 text-center focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
                       >
                         <option value="EP">EP</option>
                         <option value="CP">CP</option>
@@ -496,50 +496,50 @@ export const HotelsSection: React.FC<HotelsSectionProps> = ({
                     </td>
 
                     {/* Double Rate */}
-                    <td className="py-1 px-1.5 text-right">
+                    <td className="py-2 px-1.5 text-right">
                       <input
                         type="number"
                         min="0"
                         value={activeOption.doubleRate ?? ''}
                         onChange={(e) => updateHotelOption(hotelIndex, activeOption.id, { doubleRate: parsePositiveNumber(e.target.value, 0) })}
-                        className="w-18 text-right bg-white border border-slate-300 rounded px-1.5 py-0.5 text-xs font-black text-slate-900 focus:outline-none focus:border-blue-500"
+                        className="w-full text-right bg-white border border-slate-300 rounded-md px-1.5 py-1 text-xs font-black text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
                       />
                     </td>
 
                     {/* Extra Bed Rate */}
-                    <td className="py-1 px-1.5 text-right">
+                    <td className="py-2 px-1.5 text-right">
                       <input
                         type="number"
                         min="0"
                         value={activeOption.extraBedRate ?? ''}
                         onChange={(e) => updateHotelOption(hotelIndex, activeOption.id, { extraBedRate: parsePositiveNumber(e.target.value, 0) })}
-                        className="w-18 text-right bg-white border border-slate-300 rounded px-1.5 py-0.5 text-xs font-black text-slate-900 focus:outline-none focus:border-blue-500"
+                        className="w-full text-right bg-white border border-slate-300 rounded-md px-1.5 py-1 text-xs font-black text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
                       />
                     </td>
 
                     {/* Subtotal */}
-                    <td className="py-1 px-1.5 text-right font-black text-blue-700 font-brand whitespace-nowrap">
+                    <td className="py-2 px-2 text-right font-black text-blue-700 font-brand text-xs whitespace-nowrap">
                       {formatINR(calc.totalCost)}
                     </td>
 
                     {/* Actions */}
-                    <td className="py-1 px-1 text-center">
+                    <td className="py-2 px-1 text-center">
                       <div className="flex items-center justify-center gap-0.5">
                         <button
                           type="button"
                           onClick={() => duplicateHotel(hotelIndex)}
                           title="Duplicate stay"
-                          className="p-1 text-slate-400 hover:text-blue-600 rounded transition cursor-pointer"
+                          className="p-1 text-slate-400 hover:text-blue-600 rounded-md transition cursor-pointer"
                         >
-                          <Copy className="w-3 h-3" />
+                          <Copy className="w-3.5 h-3.5" />
                         </button>
                         <button
                           type="button"
                           onClick={() => deleteHotel(hotelIndex)}
                           title="Delete stay"
-                          className="p-1 text-slate-400 hover:text-rose-600 rounded transition cursor-pointer"
+                          className="p-1 text-slate-400 hover:text-rose-600 rounded-md transition cursor-pointer"
                         >
-                          <Trash2 className="w-3 h-3" />
+                          <Trash2 className="w-3.5 h-3.5" />
                         </button>
                       </div>
                     </td>

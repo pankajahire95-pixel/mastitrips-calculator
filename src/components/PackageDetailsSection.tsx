@@ -21,7 +21,7 @@ export const PackageDetailsSection: React.FC<PackageDetailsSectionProps> = ({
   };
 
   return (
-    <section className="bg-white rounded-xl border border-slate-200 shadow-2xs p-3 sm:p-3.5 transition hover:border-slate-300">
+    <section className="bg-white rounded-xl border border-slate-200 shadow-2xs p-3 sm:p-3.5 transition hover:border-slate-300 h-full flex flex-col justify-between">
       {/* Compact Header */}
       <div className="flex items-center justify-between gap-2 mb-2.5 pb-2 border-b border-slate-100">
         <div className="flex items-center gap-2">

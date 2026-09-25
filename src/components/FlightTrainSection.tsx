@@ -91,29 +91,29 @@ export const FlightTrainSection: React.FC<FlightTrainSectionProps> = ({
 
       {/* Fares Table */}
       {flightTrainFares.length === 0 ? (
-        <div className="text-center py-4 border border-dashed border-slate-300 rounded bg-slate-50/50">
+        <div className="text-center py-6 border border-dashed border-slate-300 rounded-lg bg-slate-50/50">
           <p className="text-xs text-slate-500 font-semibold">No flight or train sectors added (optional)</p>
           <button
             type="button"
             onClick={addFare}
-            className="mt-1 text-xs text-blue-600 font-bold hover:underline cursor-pointer"
+            className="mt-1.5 text-xs text-blue-600 font-bold hover:underline cursor-pointer"
           >
             + Add Flight / Train Sector Fare
           </button>
         </div>
       ) : (
-        <div className="overflow-x-auto border border-slate-300 rounded">
+        <div className="overflow-x-auto border border-slate-200 rounded-lg shadow-2xs">
           <table className="w-full text-left text-xs border-collapse">
-            <thead className="bg-slate-100 text-slate-700 uppercase text-[10px] font-extrabold border-b border-slate-300">
+            <thead className="bg-slate-50 text-slate-600 uppercase text-[11px] font-bold tracking-wider border-b border-slate-200">
               <tr>
-                <th className="py-1 px-1.5 w-32">Mode / Class</th>
-                <th className="py-1 px-1.5 min-w-[150px]">Sector (Route)</th>
-                <th className="py-1 px-1.5 w-24">Flight/Train #</th>
-                <th className="py-1 px-1.5 text-right w-22">Adult Fare</th>
-                <th className="py-1 px-1.5 text-right w-22">Child Fare</th>
-                <th className="py-1 px-1 text-center w-28">Pax (A/C/I)</th>
-                <th className="py-1 px-1.5 text-right w-24">Subtotal</th>
-                <th className="py-1 px-1 text-center w-14">Actions</th>
+                <th className="py-2 px-2.5 w-36">Mode / Class</th>
+                <th className="py-2 px-2.5 min-w-[180px]">Sector (Route)</th>
+                <th className="py-2 px-2.5 w-28">Flight/Train #</th>
+                <th className="py-2 px-2.5 text-right w-24">Adult Fare</th>
+                <th className="py-2 px-2.5 text-right w-24">Child Fare</th>
+                <th className="py-2 px-1 text-center w-32">Pax (A / C / I)</th>
+                <th className="py-2 px-2.5 text-right w-28">Subtotal</th>
+                <th className="py-2 px-1 text-center w-16">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-slate-200 bg-white">
@@ -122,11 +122,11 @@ export const FlightTrainSection: React.FC<FlightTrainSectionProps> = ({
                 const hasCustomChild = f.childRate !== null && f.childRate !== undefined;
                 return (
                   <tr key={f.id} className="hover:bg-blue-50/40 transition">
-                    <td className="py-1 px-1.5">
+                    <td className="py-2 px-2.5">
                       <select
                         value={f.transportType}
                         onChange={(e) => updateFare(idx, { ...f, transportType: e.target.value as FareTransportType })}
-                        className="w-full bg-white border border-slate-300 rounded px-1.5 py-0.5 text-xs font-semibold focus:outline-none focus:border-blue-500"
+                        className="w-full bg-white border border-slate-300 rounded-md px-2 py-1 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
                       >
                         <option value="Flight">Flight</option>
                         <option value="Train (1st AC)">Train (1st AC)</option>
@@ -138,52 +138,52 @@ export const FlightTrainSection: React.FC<FlightTrainSectionProps> = ({
                         <option value="Other Transit">Other</option>
                       </select>
                     </td>
-                    <td className="py-1 px-1.5">
+                    <td className="py-2 px-2.5">
                       <input
                         type="text"
                         placeholder="e.g. DEL -> UDR"
                         value={f.sector}
                         onChange={(e) => updateFare(idx, { ...f, sector: e.target.value })}
-                        className="w-full bg-white border border-slate-300 rounded px-1.5 py-0.5 text-xs font-bold text-slate-900 focus:outline-none focus:border-blue-500"
+                        className="w-full bg-white border border-slate-300 rounded-md px-2.5 py-1 text-xs font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
                       />
                     </td>
-                    <td className="py-1 px-1.5">
+                    <td className="py-2 px-2.5">
                       <input
                         type="text"
                         placeholder="6E-2041"
                         value={f.flightOrTrainNumber || ''}
                         onChange={(e) => updateFare(idx, { ...f, flightOrTrainNumber: e.target.value })}
-                        className="w-full bg-white border border-slate-300 rounded px-1.5 py-0.5 text-xs font-semibold focus:outline-none focus:border-blue-500"
+                        className="w-full bg-white border border-slate-300 rounded-md px-2 py-1 text-xs font-semibold focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
                       />
                     </td>
-                    <td className="py-1 px-1.5 text-right">
+                    <td className="py-2 px-2.5 text-right">
                       <input
                         type="number"
                         min="0"
                         value={f.adultRate || ''}
                         onChange={(e) => updateFare(idx, { ...f, adultRate: parsePositiveNumber(e.target.value, 0) })}
-                        className="w-20 bg-white border border-slate-300 rounded px-1.5 py-0.5 text-right font-black text-xs text-slate-900 focus:outline-none focus:border-blue-500"
+                        className="w-22 bg-white border border-slate-300 rounded-md px-2.5 py-1 text-right font-black text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
                       />
                     </td>
-                    <td className="py-1 px-1.5 text-right">
+                    <td className="py-2 px-2.5 text-right">
                       <input
                         type="number"
                         min="0"
                         placeholder={`Auto (${pax.childPercentage}%)`}
                         value={hasCustomChild ? (f.childRate as number) : ''}
                         onChange={(e) => updateFare(idx, { ...f, childRate: e.target.value === '' ? null : parsePositiveNumber(e.target.value, 0) })}
-                        className="w-20 bg-white border border-slate-300 rounded px-1.5 py-0.5 text-right text-xs font-semibold text-slate-800 focus:outline-none focus:border-blue-500"
+                        className="w-22 bg-white border border-slate-300 rounded-md px-2.5 py-1 text-right text-xs font-semibold text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
                       />
                     </td>
-                    <td className="py-1 px-1 text-center">
-                      <div className="inline-flex items-center gap-0.5">
+                    <td className="py-2 px-1 text-center">
+                      <div className="inline-flex items-center gap-1">
                         <input
                           type="number"
                           min="0"
                           title="Adults"
                           value={f.adultQuantity ?? ''}
                           onChange={(e) => updateFare(idx, { ...f, adultQuantity: parsePositiveNumber(e.target.value, 0) })}
-                          className="w-7 bg-white border border-slate-300 rounded py-0.5 text-center font-black text-xs text-slate-900 focus:outline-none focus:border-blue-500"
+                          className="w-8 bg-white border border-slate-300 rounded-md py-1 text-center font-black text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
                         />
                         <span className="text-slate-400 font-bold">/</span>
                         <input
@@ -192,7 +192,7 @@ export const FlightTrainSection: React.FC<FlightTrainSectionProps> = ({
                           title="Children"
                           value={f.childQuantity ?? ''}
                           onChange={(e) => updateFare(idx, { ...f, childQuantity: parsePositiveNumber(e.target.value, 0) })}
-                          className="w-7 bg-white border border-slate-300 rounded py-0.5 text-center font-black text-xs text-amber-800 focus:outline-none focus:border-blue-500"
+                          className="w-8 bg-white border border-slate-300 rounded-md py-1 text-center font-black text-xs text-amber-800 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
                         />
                         <span className="text-slate-400 font-bold">/</span>
                         <input
@@ -201,30 +201,30 @@ export const FlightTrainSection: React.FC<FlightTrainSectionProps> = ({
                           title="Infants"
                           value={f.infantQuantity ?? ''}
                           onChange={(e) => updateFare(idx, { ...f, infantQuantity: parsePositiveNumber(e.target.value, 0) })}
-                          className="w-7 bg-white border border-slate-300 rounded py-0.5 text-center font-black text-xs text-pink-800 focus:outline-none focus:border-blue-500"
+                          className="w-8 bg-white border border-slate-300 rounded-md py-1 text-center font-black text-xs text-pink-800 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 shadow-2xs"
                         />
                       </div>
                     </td>
-                    <td className="py-1 px-1.5 text-right font-black text-blue-700 font-brand whitespace-nowrap">
+                    <td className="py-2 px-2.5 text-right font-black text-blue-700 font-brand text-xs sm:text-sm whitespace-nowrap">
                       {formatINR(subtotal)}
                     </td>
-                    <td className="py-1 px-1 text-center">
-                      <div className="flex items-center justify-center gap-0.5">
+                    <td className="py-2 px-1 text-center">
+                      <div className="flex items-center justify-center gap-1">
                         <button
                           type="button"
                           onClick={() => duplicateFare(idx)}
-                          className="p-1 text-slate-400 hover:text-blue-600 rounded transition cursor-pointer"
+                          className="p-1 text-slate-400 hover:text-blue-600 rounded-md transition cursor-pointer"
                           title="Duplicate sector"
                         >
-                          <Copy className="w-3 h-3" />
+                          <Copy className="w-3.5 h-3.5" />
                         </button>
                         <button
                           type="button"
                           onClick={() => deleteFare(idx)}
-                          className="p-1 text-slate-400 hover:text-rose-600 rounded transition cursor-pointer"
+                          className="p-1 text-slate-400 hover:text-rose-600 rounded-md transition cursor-pointer"
                           title="Delete sector"
                         >
-                          <Trash2 className="w-3 h-3" />
+                          <Trash2 className="w-3.5 h-3.5" />
                         </button>
                       </div>
                     </td>
