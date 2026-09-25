@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   Plus, 
   Save, 
@@ -14,7 +14,8 @@ import {
   Compass,
   FileSpreadsheet,
   Lock,
-  KeyRound
+  KeyRound,
+  Download
 } from 'lucide-react';
 import { usePinSecurity } from './PinGate';
 
@@ -42,7 +43,30 @@ export const Header: React.FC<HeaderProps> = ({
   savedCount,
 }) => {
   const [showShortcuts, setShowShortcuts] = useState(false);
+  const [deferredPrompt, setDeferredPrompt] = useState<any>(null);
+  const [isInstallable, setIsInstallable] = useState(false);
   const { lock, openChangePin } = usePinSecurity();
+
+  useEffect(() => {
+    const handleBeforeInstall = (e: Event) => {
+      e.preventDefault();
+      setDeferredPrompt(e);
+      setIsInstallable(true);
+    };
+
+    window.addEventListener('beforeinstallprompt', handleBeforeInstall);
+    return () => window.removeEventListener('beforeinstallprompt', handleBeforeInstall);
+  }, []);
+
+  const handleInstallApp = async () => {
+    if (!deferredPrompt) return;
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    if (outcome === 'accepted') {
+      setIsInstallable(false);
+      setDeferredPrompt(null);
+    }
+  };
 
   return (
     <header className="bg-slate-900 border-b border-slate-800 text-white sticky top-0 z-40 shadow-md backdrop-blur-md bg-slate-900/95">
@@ -150,6 +174,19 @@ export const Header: React.FC<HeaderProps> = ({
               <span className="hidden sm:inline">Print Quotation</span>
               <span className="sm:hidden">Print</span>
             </button>
+
+            {/* Install as Chrome Application */}
+            {isInstallable && (
+              <button
+                onClick={handleInstallApp}
+                title="Install MastiTrips as Chrome Desktop/Mobile App"
+                className="flex items-center gap-1 px-2.5 py-1 text-xs font-extrabold text-white bg-emerald-600 hover:bg-emerald-500 rounded-md transition cursor-pointer shadow-xs active:scale-95 ring-1 ring-emerald-400/40"
+              >
+                <Download className="w-3.5 h-3.5 text-white" />
+                <span className="hidden sm:inline">Install App</span>
+                <span className="sm:hidden">Install</span>
+              </button>
+            )}
 
             {/* Change PIN */}
             <button

@@ -2,11 +2,20 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='%231E40AF'><circle cx='12' cy='12' r='10'/><text x='12' y='16' font-size='12' text-anchor='middle' fill='%23F97316' font-weight='bold'>M</text></svg>" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="./icon.svg" />
+    <link rel="icon" type="image/png" sizes="192x192" href="./icon-192.png" />
+    <link rel="apple-touch-icon" href="./icon-192.png" />
+    <link rel="manifest" href="./manifest.webmanifest" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <meta name="theme-color" content="#0f172a" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Package Calc" />
+    <meta name="application-name" content="MastiTrips Package Calculator" />
+    <meta name="mobile-web-app-capable" content="yes" />
     <meta name="robots" content="noindex, nofollow, noarchive, nosnippet" />
     <meta name="googlebot" content="noindex, nofollow, noarchive" />
-    <meta name="description" content="Internal Domestic Tour Package Costing Calculator for MastiTrips - Fast, Accurate Hotel, Vehicle, and Pax Cost Engine" />
+    <meta name="description" content="Professional Domestic Tour Package Costing and Client Quotation Engine" />
     <title>MastiTrips Domestic Package Cost Calculator</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,5 +24,15 @@
   <body class="bg-slate-50 text-slate-900 antialiased min-h-screen selection:bg-blue-500 selection:text-white">
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    <script>
+      // Register Progressive Web App Service Worker for Chrome Application installability
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('./sw.js')
+            .then((reg) => console.log('PWA ServiceWorker registered with scope:', reg.scope))
+            .catch((err) => console.log('PWA ServiceWorker registration failed:', err));
+        });
+      }
+    </script>
   </body>
 </html>

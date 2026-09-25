@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e3a8a" />
+      <stop offset="50%" stop-color="#2563eb" />
+      <stop offset="100%" stop-color="#0f172a" />
+    </linearGradient>
+    <linearGradient id="orangeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fb923c" />
+      <stop offset="100%" stop-color="#ea580c" />
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="128" fill="url(#bgGrad)" />
+  <circle cx="256" cy="256" r="210" stroke="rgba(255,255,255,0.12)" stroke-width="8" fill="none" />
+  <!-- Letter M in vibrant orange -->
+  <path d="M 140 370 L 140 142 L 210 142 L 256 260 L 302 142 L 372 142 L 372 370 L 316 370 L 316 220 L 272 334 L 240 334 L 196 220 L 196 370 Z" fill="url(#orangeGrad)" filter="drop-shadow(0px 8px 16px rgba(0,0,0,0.35))" />
+</svg>
