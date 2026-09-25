@@ -317,96 +317,85 @@ export const HotelsSection: React.FC<HotelsSectionProps> = ({
   const totalHotelNights = hotels.reduce((sum, h) => sum + (h.nights || 0), 0);
 
   return (
-    <section className="bg-white rounded-2xl border border-slate-200/90 shadow-xs p-5 sm:p-6 transition hover:shadow-md hover:border-slate-300">
+    <section className="bg-white rounded-xl border border-slate-200 shadow-2xs p-3 sm:p-3.5 transition hover:border-slate-300">
       {/* Section Header */}
-      <div className="flex flex-wrap items-center justify-between gap-3 mb-5 pb-3.5 border-b border-slate-100">
-        <div className="flex items-center gap-3">
-          <div className="w-9 h-9 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold shadow-2xs ring-1 ring-blue-100">
-            <Building2 className="w-5 h-5" />
+      <div className="flex flex-wrap items-center justify-between gap-2 mb-2.5 pb-2 border-b border-slate-100">
+        <div className="flex items-center gap-2">
+          <div className="w-6 h-6 rounded-md bg-blue-50 text-blue-600 flex items-center justify-center font-bold ring-1 ring-blue-100">
+            <Building2 className="w-3.5 h-3.5" />
           </div>
           <div>
-            <div className="flex items-center gap-2">
-              <h2 className="text-base font-extrabold uppercase tracking-wider text-slate-900 font-brand">
+            <div className="flex items-center gap-1.5">
+              <h2 className="text-xs font-bold uppercase tracking-wider text-slate-800 font-brand">
                 3. Hotels & Accommodations
               </h2>
-              <span className="px-3 py-0.5 bg-blue-50 text-blue-700 text-xs font-black rounded-full border border-blue-200">
+              <span className="px-2 py-0.2 bg-blue-50 text-blue-700 text-[10px] font-black rounded-full border border-blue-200">
                 {hotels.length} {hotels.length === 1 ? 'Stay' : 'Stays'}
               </span>
             </div>
-            <p className="text-xs text-slate-500 font-medium mt-0.5">
-              Feed multiple hotels per destination &amp; switch the active hotel for calculation anytime
-            </p>
           </div>
         </div>
 
         {/* Action & Subtotal */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2.5">
           <div className="text-right">
-            <div className="text-[10px] uppercase font-bold text-slate-400">Total Active Hotels Net</div>
-            <div className="text-lg font-black text-blue-700 font-brand">
-              {formatINR(totalHotelCost)}
-            </div>
+            <span className="text-[10px] uppercase font-bold text-slate-400 mr-1.5">Total Hotels:</span>
+            <span className="text-sm font-black text-blue-700 font-brand">{formatINR(totalHotelCost)}</span>
           </div>
 
           <button
             type="button"
             onClick={addHotel}
-            className="flex items-center gap-1.5 px-4 py-2 text-xs font-bold text-white bg-blue-600 hover:bg-blue-500 rounded-xl shadow-sm transition cursor-pointer active:scale-95 ring-1 ring-blue-400/30"
+            className="flex items-center gap-1 px-2.5 py-1 text-xs font-bold text-white bg-blue-600 hover:bg-blue-500 rounded-md shadow-xs transition cursor-pointer active:scale-95"
           >
-            <Plus className="w-4 h-4" />
-            <span>Add Destination Stay</span>
+            <Plus className="w-3.5 h-3.5" />
+            <span>Add Stay</span>
           </button>
         </div>
       </div>
 
       {/* 1. MASTER TOUR ROOM ALLOCATION (Command Center Banner) */}
-      <div className="mb-6 p-4 sm:p-5 bg-gradient-to-br from-blue-50/90 via-indigo-50/50 to-slate-50 border border-blue-200/80 rounded-2xl shadow-xs">
-        <div className="flex flex-wrap items-center justify-between gap-3 mb-4">
-          <div className="flex items-center gap-2.5">
-            <div className="w-7 h-7 rounded-lg bg-blue-600 text-white flex items-center justify-center shadow-2xs">
-              <Layers className="w-4 h-4" />
+      <div className="mb-3 p-2.5 sm:p-3 bg-gradient-to-br from-blue-50/70 via-indigo-50/40 to-slate-50 border border-blue-200/80 rounded-xl shadow-2xs">
+        <div className="flex flex-wrap items-center justify-between gap-2 mb-2">
+          <div className="flex items-center gap-2">
+            <div className="w-5 h-5 rounded bg-blue-600 text-white flex items-center justify-center">
+              <Layers className="w-3 h-3" />
             </div>
-            <div>
-              <h3 className="text-sm font-extrabold uppercase tracking-wider text-slate-900 font-brand">
-                Combined Tour Room Allocation
-              </h3>
-              <p className="text-xs text-slate-500">
-                This room distribution setup applies automatically to all active destination hotels in this tour
-              </p>
-            </div>
+            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-800 font-brand">
+              Combined Room Allocation
+            </h3>
           </div>
 
           {/* Capacity Status Badge */}
-          <span className={`inline-flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-extrabold shadow-2xs ${
+          <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-lg text-[11px] font-extrabold ${
             isTourCapacitySufficient
               ? 'bg-emerald-100 text-emerald-900 border border-emerald-300'
               : 'bg-amber-100 text-amber-900 border border-amber-300'
           }`}>
             {isTourCapacitySufficient ? (
-              <CheckCircle2 className="w-4 h-4 text-emerald-600" />
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
             ) : (
-              <ShieldAlert className="w-4 h-4 text-amber-600" />
+              <ShieldAlert className="w-3.5 h-3.5 text-amber-600" />
             )}
-            <span>Room Capacity: <strong>{totalAllocatedCapacity} Pax</strong></span>
-            {totalPayingPax > 0 && <span className="font-semibold text-xs text-slate-600">({totalPayingPax} Required)</span>}
+            <span>Capacity: <strong>{totalAllocatedCapacity} Pax</strong></span>
+            {totalPayingPax > 0 && <span className="font-semibold text-[10px] text-slate-600">({totalPayingPax} Req)</span>}
           </span>
         </div>
 
         {/* 3 Room Sharing Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5">
-          
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
           {/* Double Rooms Card */}
-          <div className="bg-white p-4 rounded-xl border border-slate-200 shadow-2xs flex items-center justify-between gap-3 hover:border-blue-300 transition">
+          <div className="bg-white p-2 sm:p-2.5 rounded-lg border border-slate-200 shadow-2xs flex items-center justify-between gap-2 hover:border-blue-300 transition">
             <div>
-              <div className="text-sm font-extrabold text-slate-800 flex items-center gap-2">
-                <BedDouble className="w-4 h-4 text-blue-600" />
+              <div className="text-xs font-extrabold text-slate-800 flex items-center gap-1.5">
+                <BedDouble className="w-3.5 h-3.5 text-blue-600" />
                 <span>Double Sharing</span>
               </div>
-              <div className="text-xs text-slate-500 font-semibold mt-1">
-                2 Persons / Room • <span className="text-blue-700 font-bold">{(roomAllocation.doubleRooms || 0) * 2} Pax</span>
+              <div className="text-[10px] text-slate-500 font-medium">
+                2/Rm • <span className="text-blue-700 font-bold">{(roomAllocation.doubleRooms || 0) * 2} Pax</span>
               </div>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5">
               <input
                 type="number"
                 min="0"
@@ -415,24 +404,24 @@ export const HotelsSection: React.FC<HotelsSectionProps> = ({
                   ...roomAllocation,
                   doubleRooms: parsePositiveNumber(e.target.value, 0),
                 })}
-                className="w-16 bg-slate-50 border border-slate-300 rounded-lg px-2 py-2 text-base font-black text-center text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-inner"
+                className="w-13 bg-slate-50 border border-slate-300 rounded-md px-1.5 py-1 text-sm font-black text-center text-slate-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-inner"
               />
-              <span className="text-xs font-bold text-slate-400">Rms</span>
+              <span className="text-[10px] font-bold text-slate-400">Rms</span>
             </div>
           </div>
 
           {/* Triple Rooms Card */}
-          <div className="bg-white p-4 rounded-xl border border-blue-200 shadow-2xs flex items-center justify-between gap-3 hover:border-blue-400 transition">
+          <div className="bg-white p-2 sm:p-2.5 rounded-lg border border-blue-200 shadow-2xs flex items-center justify-between gap-2 hover:border-blue-400 transition">
             <div>
-              <div className="text-sm font-extrabold text-blue-950 flex items-center gap-2">
-                <Users className="w-4 h-4 text-blue-600" />
+              <div className="text-xs font-extrabold text-blue-950 flex items-center gap-1.5">
+                <Users className="w-3.5 h-3.5 text-blue-600" />
                 <span>Triple Sharing</span>
               </div>
-              <div className="text-xs text-blue-800/80 font-semibold mt-1">
-                3 Persons (1 Dbl + 1 Ex Bed) • <span className="text-blue-900 font-bold">{(roomAllocation.tripleRooms || 0) * 3} Pax</span>
+              <div className="text-[10px] text-blue-800 font-medium">
+                3/Rm • <span className="text-blue-900 font-bold">{(roomAllocation.tripleRooms || 0) * 3} Pax</span>
               </div>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5">
               <input
                 type="number"
                 min="0"
@@ -441,24 +430,24 @@ export const HotelsSection: React.FC<HotelsSectionProps> = ({
                   ...roomAllocation,
                   tripleRooms: parsePositiveNumber(e.target.value, 0),
                 })}
-                className="w-16 bg-blue-50/50 border border-blue-300 rounded-lg px-2 py-2 text-base font-black text-center text-blue-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-inner"
+                className="w-13 bg-blue-50/50 border border-blue-300 rounded-md px-1.5 py-1 text-sm font-black text-center text-blue-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-inner"
               />
-              <span className="text-xs font-bold text-blue-400">Rms</span>
+              <span className="text-[10px] font-bold text-blue-400">Rms</span>
             </div>
           </div>
 
           {/* Quad Rooms Card */}
-          <div className="bg-white p-4 rounded-xl border border-indigo-200 shadow-2xs flex items-center justify-between gap-3 hover:border-indigo-400 transition">
+          <div className="bg-white p-2 sm:p-2.5 rounded-lg border border-indigo-200 shadow-2xs flex items-center justify-between gap-2 hover:border-indigo-400 transition">
             <div>
-              <div className="text-sm font-extrabold text-indigo-950 flex items-center gap-2">
-                <Users className="w-4 h-4 text-indigo-600" />
+              <div className="text-xs font-extrabold text-indigo-950 flex items-center gap-1.5">
+                <Users className="w-3.5 h-3.5 text-indigo-600" />
                 <span>Quad Sharing</span>
               </div>
-              <div className="text-xs text-indigo-800/80 font-semibold mt-1">
-                4 Persons (1 Dbl + 2 Ex Beds) • <span className="text-indigo-900 font-bold">{(roomAllocation.quadRooms || 0) * 4} Pax</span>
+              <div className="text-[10px] text-indigo-800 font-medium">
+                4/Rm • <span className="text-indigo-900 font-bold">{(roomAllocation.quadRooms || 0) * 4} Pax</span>
               </div>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1.5">
               <input
                 type="number"
                 min="0"
@@ -467,28 +456,27 @@ export const HotelsSection: React.FC<HotelsSectionProps> = ({
                   ...roomAllocation,
                   quadRooms: parsePositiveNumber(e.target.value, 0),
                 })}
-                className="w-16 bg-indigo-50/50 border border-indigo-300 rounded-lg px-2 py-2 text-base font-black text-center text-indigo-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-inner"
+                className="w-13 bg-indigo-50/50 border border-indigo-300 rounded-md px-1.5 py-1 text-sm font-black text-center text-indigo-900 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-inner"
               />
-              <span className="text-xs font-bold text-indigo-400">Rms</span>
+              <span className="text-[10px] font-bold text-indigo-400">Rms</span>
             </div>
           </div>
-
         </div>
 
         {/* 1-Click Smart Suggestion Chips */}
         {roomSuggestions.length > 0 && totalPayingPax > 0 && (
-          <div className="mt-4 pt-3.5 border-t border-blue-200/70 flex flex-wrap items-center gap-2 text-xs text-slate-600">
+          <div className="mt-2.5 pt-2 border-t border-blue-200/70 flex flex-wrap items-center gap-1.5 text-[11px] text-slate-600">
             <span className="flex items-center gap-1 font-bold text-slate-700">
-              <Sparkles className="w-4 h-4 text-blue-600" />
-              1-Click Setup for {totalPayingPax} Pax:
+              <Sparkles className="w-3.5 h-3.5 text-blue-600" />
+              1-Click Setup:
             </span>
-            <div className="flex flex-wrap items-center gap-2">
+            <div className="flex flex-wrap items-center gap-1.5">
               {roomSuggestions.map((sug, i) => (
                 <button
                   key={i}
                   type="button"
                   onClick={() => onUpdateRoomAllocation(sug.allocation)}
-                  className="px-3.5 py-1.5 bg-white hover:bg-blue-600 hover:text-white border border-blue-200 rounded-xl text-xs font-bold text-blue-900 shadow-2xs transition cursor-pointer active:scale-95"
+                  className="px-2.5 py-0.5 bg-white hover:bg-blue-600 hover:text-white border border-blue-200 rounded-lg text-[11px] font-bold text-blue-900 shadow-2xs transition cursor-pointer active:scale-95"
                 >
                   {sug.label}
                 </button>
@@ -513,7 +501,7 @@ export const HotelsSection: React.FC<HotelsSectionProps> = ({
           </button>
         </div>
       ) : (
-        <div className="space-y-6">
+        <div className="space-y-3">
           {hotels.map((rawHotel, hotelIndex) => {
             const { normalized, options, selectedOptionId } = ensureHotelWithOptions(rawHotel);
             const calc = calculateHotelItemCost(normalized, roomAllocation);
@@ -533,15 +521,15 @@ export const HotelsSection: React.FC<HotelsSectionProps> = ({
             return (
               <div
                 key={normalized.id}
-                className="rounded-2xl border border-slate-200 bg-white shadow-xs overflow-hidden transition hover:border-slate-300 hover:shadow-sm"
+                className="rounded-xl border border-slate-200 bg-white shadow-2xs overflow-hidden transition hover:border-slate-300"
               >
                 {/* Hotel Card Top Header */}
-                <div className="bg-slate-50/90 px-5 py-3.5 border-b border-slate-200 flex flex-wrap items-center justify-between gap-3">
-                  <div className="flex items-center gap-3">
-                    <span className="w-7 h-7 rounded-xl bg-blue-600 text-white text-xs font-black flex items-center justify-center shadow-2xs">
+                <div className="bg-slate-50/90 px-3.5 py-2 border-b border-slate-200 flex flex-wrap items-center justify-between gap-2">
+                  <div className="flex items-center gap-2">
+                    <span className="w-5 h-5 rounded-md bg-blue-600 text-white text-[11px] font-black flex items-center justify-center shadow-2xs">
                       #{hotelIndex + 1}
                     </span>
-                    <span className="text-sm font-black text-slate-900 font-brand">
+                    <span className="text-xs font-black text-slate-900 font-brand">
                       {normalized.destination || `Destination #${hotelIndex + 1}`}
                     </span>
                     <span className="px-2.5 py-0.5 bg-slate-200/80 text-slate-800 text-xs font-bold rounded-lg">
@@ -587,12 +575,12 @@ export const HotelsSection: React.FC<HotelsSectionProps> = ({
                 </div>
 
                 {/* Hotel Card Body */}
-                <div className="p-5 space-y-5 text-xs">
+                <div className="p-3 space-y-2.5 text-xs">
                   
                   {/* Row 1: Destination Stay Parameters (City & Nights) */}
-                  <div className="grid grid-cols-1 sm:grid-cols-12 gap-3.5 p-3.5 bg-slate-50/60 rounded-xl border border-slate-200/70">
+                  <div className="grid grid-cols-1 sm:grid-cols-12 gap-2.5 p-2 bg-slate-50/60 rounded-lg border border-slate-200/70">
                     <div className="sm:col-span-8">
-                      <label className="block text-xs font-bold text-slate-700 mb-1">
+                      <label className="block text-[11px] font-bold text-slate-700 mb-1">
                         City / Destination <span className="text-rose-500">*</span>
                       </label>
                       <input
@@ -600,12 +588,12 @@ export const HotelsSection: React.FC<HotelsSectionProps> = ({
                         placeholder="e.g. Udaipur / Jaipur / Goa"
                         value={normalized.destination}
                         onChange={(e) => updateDestinationFields(hotelIndex, { destination: e.target.value })}
-                        className="w-full bg-white border border-slate-300 rounded-xl px-3.5 py-2 text-xs font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                        className="w-full bg-white border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs font-bold text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
                       />
                     </div>
 
                     <div className="sm:col-span-4">
-                      <label className="block text-xs font-bold text-slate-700 mb-1 text-center">
+                      <label className="block text-[11px] font-bold text-slate-700 mb-1 text-center">
                         Stay Duration (Nights) <span className="text-rose-500">*</span>
                       </label>
                       <input
@@ -613,30 +601,27 @@ export const HotelsSection: React.FC<HotelsSectionProps> = ({
                         min="1"
                         value={normalized.nights || ''}
                         onChange={(e) => updateDestinationFields(hotelIndex, { nights: parsePositiveNumber(e.target.value, 1) })}
-                        className="w-full bg-white border border-slate-300 rounded-xl py-2 text-xs font-black text-center text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
+                        className="w-full bg-white border border-slate-300 rounded-lg py-1.5 text-xs font-black text-center text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500"
                       />
                     </div>
                   </div>
 
                   {/* Row 2: MULTI-HOTEL SELECTION SWITCH & FEED CONTROL CENTER */}
-                  <div className="p-4 bg-gradient-to-r from-blue-50/90 via-indigo-50/60 to-slate-50 border-2 border-blue-200 rounded-2xl space-y-3.5 shadow-2xs">
+                  <div className="p-2.5 bg-gradient-to-r from-blue-50/70 via-indigo-50/50 to-slate-50 border border-blue-200 rounded-xl space-y-2 shadow-2xs">
                     
                     {/* Top Switcher Bar with Select Box */}
-                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 pb-3 border-b border-blue-200/80">
-                      <div className="flex items-center gap-2">
-                        <div className="w-6 h-6 rounded-lg bg-blue-600 text-white flex items-center justify-center shadow-2xs">
-                          <SlidersHorizontal className="w-3.5 h-3.5" />
+                    <div className="flex flex-col md:flex-row md:items-center justify-between gap-2 pb-2 border-b border-blue-200/80">
+                      <div className="flex items-center gap-1.5">
+                        <div className="w-5 h-5 rounded-md bg-blue-600 text-white flex items-center justify-center shadow-2xs">
+                          <SlidersHorizontal className="w-3 h-3" />
                         </div>
                         <div>
-                          <div className="text-xs font-black uppercase tracking-wider text-slate-900 flex items-center gap-1.5">
+                          <div className="text-[11px] font-black uppercase tracking-wider text-slate-900 flex items-center gap-1">
                             <span>Hotel Selection Switch</span>
-                            <span className="text-[10px] font-bold text-blue-700 bg-blue-100/90 px-2 py-0.5 rounded-md">
-                              {options.length} {options.length === 1 ? 'Option' : 'Options'}
+                            <span className="text-[10px] font-bold text-blue-700 bg-blue-100/90 px-1.5 py-0.2 rounded">
+                              {options.length} {options.length === 1 ? 'Opt' : 'Opts'}
                             </span>
                           </div>
-                          <p className="text-[11px] text-slate-500 font-medium">
-                            Choose which hotel option to use for package costing calculation
-                          </p>
                         </div>
                       </div>
 
