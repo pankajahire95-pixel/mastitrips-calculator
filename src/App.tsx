@@ -16,7 +16,9 @@ import {
   ChevronDown, 
   ChevronUp, 
   SlidersHorizontal,
-  Settings
+  Settings,
+  Printer,
+  X
 } from 'lucide-react';
 
 import { Header } from './components/Header';
@@ -56,6 +58,7 @@ export const App: React.FC = () => {
   const [isBreakdownOpen, setIsBreakdownOpen] = useState(false);
   const [isAuditOpen, setIsAuditOpen] = useState(false);
   const [isSavedListOpen, setIsSavedListOpen] = useState(false);
+  const [isMobileSummaryOpen, setIsMobileSummaryOpen] = useState(false);
 
   // Master calculation results (memoized for instantaneous UI updates)
   const calculation = useMemo(() => calculateMasterPackageCost(packageData), [packageData]);
@@ -189,7 +192,7 @@ export const App: React.FC = () => {
       />
 
       {/* 2. Main Workstation Area */}
-      <main className="flex-1 max-w-[1720px] w-full mx-auto px-2 sm:px-3 py-2 no-print">
+      <main className="flex-1 max-w-[1720px] w-full mx-auto px-2 sm:px-3 py-2 pb-24 lg:pb-2 no-print">
         
         {/* Smart Warnings Checklist */}
         <SmartWarningsBanner warnings={smartWarnings} />
@@ -418,6 +421,100 @@ export const App: React.FC = () => {
         </div>
 
       </main>
+
+      {/* 2.5 Mobile Floating Quotation Bar (< lg screens for Remote Work) */}
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-slate-900/95 backdrop-blur-md border-t border-slate-800 text-white px-3 py-2 shadow-2xl flex items-center justify-between no-print">
+        <div className="flex items-center gap-2">
+          <div>
+            <div className="text-[10px] uppercase font-bold text-slate-400 flex items-center gap-1">
+              <span>Quotation</span>
+              <span className="text-[9px] px-1 py-0.2 rounded bg-emerald-500/20 text-emerald-400 font-extrabold border border-emerald-500/30">
+                +{formatINR(calculation.profit)}
+              </span>
+            </div>
+            <div className="text-base sm:text-lg font-black font-brand text-orange-400 leading-tight">
+              {formatINR(calculation.sellingPrice)}
+            </div>
+          </div>
+          <div className="border-l border-slate-700 pl-2 text-left">
+            <div className="text-[9px] text-slate-400 font-medium">Per Adult</div>
+            <div className="text-xs font-bold text-white font-brand">
+              {formatINR(calculation.adultSellingPrice)}
+            </div>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-1.5">
+          <button
+            type="button"
+            onClick={() => setIsMobileSummaryOpen(true)}
+            className="px-2.5 py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-bold transition flex items-center gap-1 shadow-md active:scale-95 cursor-pointer"
+          >
+            <span>Summary</span>
+            <ChevronUp className="w-3.5 h-3.5" />
+          </button>
+          <button
+            type="button"
+            onClick={handlePrint}
+            className="p-1.5 bg-slate-800 hover:bg-slate-700 text-orange-400 rounded-lg transition border border-slate-700 active:scale-95 cursor-pointer"
+            title="Print / Save PDF"
+          >
+            <Printer className="w-4 h-4" />
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile Live Summary Bottom Drawer Modal */}
+      {isMobileSummaryOpen && (
+        <div className="lg:hidden fixed inset-0 z-50 flex flex-col justify-end bg-slate-900/70 backdrop-blur-xs animate-in fade-in">
+          <div className="bg-white rounded-t-2xl shadow-2xl border-t border-slate-300 max-h-[88vh] flex flex-col overflow-hidden animate-in slide-in-from-bottom duration-200">
+            <div className="bg-slate-900 px-4 py-3 text-white flex items-center justify-between border-b border-slate-800">
+              <div className="flex items-center gap-2">
+                <div className="w-5 h-5 rounded bg-blue-600 flex items-center justify-center font-bold text-xs">₹</div>
+                <span className="font-bold text-sm font-brand">Live Quotation & Pricing</span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsMobileSummaryOpen(false)}
+                className="p-1 text-slate-400 hover:text-white rounded-md transition cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="p-3 overflow-y-auto">
+              <LiveSummary
+                calculation={calculation}
+                pricingSettings={packageData.pricingSettings}
+                pax={packageData.pax}
+                onUpdatePricing={handleUpdatePricing}
+                onOpenBreakdownModal={() => {
+                  setIsMobileSummaryOpen(false);
+                  setIsBreakdownOpen(true);
+                }}
+                onOpenAuditModal={() => {
+                  setIsMobileSummaryOpen(false);
+                  setIsAuditOpen(true);
+                }}
+                onPrint={() => {
+                  setIsMobileSummaryOpen(false);
+                  handlePrint();
+                }}
+              />
+            </div>
+
+            <div className="p-2.5 bg-slate-50 border-t border-slate-200 flex justify-end">
+              <button
+                type="button"
+                onClick={() => setIsMobileSummaryOpen(false)}
+                className="w-full py-2 bg-slate-900 hover:bg-black text-white text-xs font-bold rounded-lg transition cursor-pointer"
+              >
+                Close & Continue Costing
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* 3. Interactive Modals */}
       <CostBreakdownModal

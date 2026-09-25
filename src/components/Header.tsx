@@ -147,7 +147,8 @@ export const Header: React.FC<HeaderProps> = ({
               className="flex items-center gap-1 px-2.5 py-1 text-xs font-extrabold text-white bg-gradient-to-r from-orange-500 to-amber-500 hover:from-orange-400 hover:to-amber-400 rounded-md transition cursor-pointer shadow-xs active:scale-95"
             >
               <Printer className="w-3 h-3 text-white" />
-              <span>Print Quotation</span>
+              <span className="hidden sm:inline">Print Quotation</span>
+              <span className="sm:hidden">Print</span>
             </button>
 
             {/* Change PIN */}
@@ -170,7 +171,7 @@ export const Header: React.FC<HeaderProps> = ({
             </button>
 
             {/* Keyboard shortcut help */}
-            <div className="relative">
+            <div className="relative hidden md:block">
               <button
                 onClick={() => setShowShortcuts(!showShortcuts)}
                 title="Keyboard Shortcuts"

@@ -102,8 +102,12 @@ export const FlightTrainSection: React.FC<FlightTrainSectionProps> = ({
           </button>
         </div>
       ) : (
-        <div className="border border-slate-200 rounded-lg shadow-2xs overflow-hidden bg-white">
-          <table className="w-full text-left text-xs border-collapse">
+        <div className="space-y-1">
+          <div className="lg:hidden flex items-center justify-end text-[10px] text-slate-500 font-semibold px-1">
+            <span>⇄ Swipe horizontally to edit all columns</span>
+          </div>
+          <div className="border border-slate-200 rounded-lg shadow-2xs overflow-x-auto lg:overflow-hidden bg-white touch-pan-x">
+            <table className="min-w-[700px] lg:min-w-0 w-full text-left text-xs border-collapse">
             <thead className="bg-slate-50 text-slate-600 uppercase text-[11px] font-bold tracking-wider border-b border-slate-200">
               <tr>
                 <th className="py-2 px-2 w-28">Mode / Class</th>
@@ -234,7 +238,8 @@ export const FlightTrainSection: React.FC<FlightTrainSectionProps> = ({
             </tbody>
           </table>
         </div>
-      )}
-    </section>
-  );
+      </div>
+    )}
+  </section>
+);
 };
