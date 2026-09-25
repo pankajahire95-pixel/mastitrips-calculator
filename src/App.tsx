@@ -21,6 +21,7 @@ import { CostBreakdownModal } from './components/CostBreakdownModal';
 import { CalculationExplanationModal } from './components/CalculationExplanationModal';
 import { SavedPackagesModal } from './components/SavedPackagesModal';
 import { PrintCostingSheet } from './components/PrintCostingSheet';
+import { PinGate } from './components/PinGate';
 
 export const App: React.FC = () => {
   const [packageData, setPackageData] = useState<PackageData>(() => {
@@ -150,7 +151,8 @@ export const App: React.FC = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-slate-100/70 flex flex-col selection:bg-blue-600 selection:text-white">
+    <PinGate>
+      <div className="min-h-screen bg-slate-100/70 flex flex-col selection:bg-blue-600 selection:text-white">
       
       {/* 1. Header Bar */}
       <Header
@@ -285,5 +287,6 @@ export const App: React.FC = () => {
       />
 
     </div>
+  </PinGate>
   );
 };

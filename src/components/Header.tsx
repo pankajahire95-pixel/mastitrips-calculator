@@ -12,8 +12,11 @@ import {
   Clock, 
   AlertCircle,
   Compass,
-  FileSpreadsheet
+  FileSpreadsheet,
+  Lock,
+  KeyRound
 } from 'lucide-react';
+import { usePinSecurity } from './PinGate';
 
 interface HeaderProps {
   onNew: () => void;
@@ -39,6 +42,7 @@ export const Header: React.FC<HeaderProps> = ({
   savedCount,
 }) => {
   const [showShortcuts, setShowShortcuts] = useState(false);
+  const { lock, openChangePin } = usePinSecurity();
 
   return (
     <header className="bg-slate-900 border-b border-slate-800 text-white sticky top-0 z-40 shadow-lg backdrop-blur-md bg-slate-900/95">
@@ -153,6 +157,25 @@ export const Header: React.FC<HeaderProps> = ({
             >
               <Printer className="w-3.5 h-3.5 text-white" />
               <span>Print Quotation</span>
+            </button>
+
+            {/* Change PIN */}
+            <button
+              onClick={openChangePin}
+              title="Change 4-Digit Security PIN"
+              className="p-1.5 text-slate-400 hover:text-orange-400 hover:bg-slate-800 rounded-lg transition cursor-pointer"
+            >
+              <KeyRound className="w-4 h-4" />
+            </button>
+
+            {/* Lock App */}
+            <button
+              onClick={lock}
+              title="Lock Calculator (4-Digit PIN required to reopen)"
+              className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-slate-300 bg-slate-800/80 hover:bg-slate-700 hover:text-amber-300 border border-slate-700 rounded-lg transition cursor-pointer active:scale-95"
+            >
+              <Lock className="w-3.5 h-3.5 text-amber-400" />
+              <span className="hidden sm:inline">Lock</span>
             </button>
 
             {/* Keyboard shortcut help */}
