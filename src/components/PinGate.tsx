@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Lock, Unlock, KeyRound, ShieldCheck, Delete, Check, AlertCircle, X } from 'lucide-react';
 
-const PIN_STORAGE_KEY = 'mastitrips_security_pin';
-const AUTH_STATUS_KEY = 'mastitrips_auth_unlocked';
-const DEFAULT_PIN = '2026';
+const PIN_STORAGE_KEY = 'mastitrips_security_pin_v2';
+const AUTH_STATUS_KEY = 'mastitrips_auth_unlocked_v2';
+const DEFAULT_PIN = '1221';
 
 export const getStoredPin = (): string => {
   try {
@@ -441,9 +441,10 @@ export const PinGate: React.FC<PinGateProps> = ({ children }) => {
         </label>
       </div>
 
-      {/* Footer hint */}
-      <div className="mt-6 text-center text-xs text-slate-500 relative z-10">
-        <span>Default PIN is <strong className="text-orange-400 font-mono">2026</strong> (you can change it anytime)</span>
+      {/* Footer security badge */}
+      <div className="mt-6 text-center text-xs text-slate-500 relative z-10 flex items-center justify-center gap-1.5">
+        <ShieldCheck className="w-3.5 h-3.5 text-emerald-500" />
+        <span>MastiTrips Proprietary Costing Engine • Confidential & Authorized Use Only</span>
       </div>
     </div>
   );
